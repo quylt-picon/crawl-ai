@@ -17,7 +17,7 @@ import {
   Search,
   XCircle,
 } from "lucide-react";
-import type { StepId } from "@/types/events";
+import type { ManualEntry, StepId } from "@/types/events";
 import { cn } from "@/lib/cn";
 import { MarkdownPanel } from "@/components/MarkdownView";
 
@@ -37,10 +37,6 @@ export function StepDetail({
       return <SearchProductView data={data as any} />;
     case "filter_results":
       return <FilterResultsView data={data as any} />;
-    case "open_product_page":
-      return <OpenProductPageView data={data as any} />;
-    case "expand_sections":
-      return <ExpandSectionsView data={data as any} />;
     case "find_manual":
       return <FindManualView data={data as any} />;
     case "finalize":
@@ -171,51 +167,7 @@ function YesNo({ value }: { value: boolean }) {
   );
 }
 
-function SourcePill({ source }: { source?: string }) {
-  if (!source) return null;
-  const tone =
-    source === "header" ? "brand" : source === "nav" ? "slate" : "amber";
-  return (
-    <Pill tone={tone as any}>
-      <span className="font-mono text-[10px]">{source}</span>
-    </Pill>
-  );
-}
-
 /* --------------------------------------------------------------- renderers */
-
-interface Counts {
-  inputs?: number;
-  buttons?: number;
-  forms?: number;
-  nav_links?: number;
-}
-
-interface InputDescriptor {
-  selector?: string;
-  type?: string;
-  placeholder?: string | null;
-  aria_label?: string | null;
-  visible?: boolean;
-  parent_hint?: string | null;
-  name?: string | null;
-}
-
-interface ButtonDescriptor {
-  selector?: string;
-  text?: string;
-  aria_label?: string | null;
-  aria_haspopup?: string | null;
-  aria_controls?: string | null;
-  has_icon?: boolean;
-  visible?: boolean;
-}
-
-interface NavLinkDescriptor {
-  href: string;
-  text: string;
-  source?: "header" | "nav" | "footer" | string;
-}
 
 function CrawlHomepageView({
   data,
@@ -223,14 +175,11 @@ function CrawlHomepageView({
   data: {
     page_title?: string;
     page_url?: string;
-    counts?: Counts;
-    inputs?: InputDescriptor[];
-    buttons?: ButtonDescriptor[];
-    forms?: Array<Record<string, any>>;
-    nav_links?: NavLinkDescriptor[];
+    html_chars?: number;
+    link_count?: number;
+    links?: LinkRow[];
   };
 }) {
-  const c = data.counts ?? {};
   return (
     <>
       <Section title="Page">
@@ -244,85 +193,31 @@ function CrawlHomepageView({
         </div>
       </Section>
 
-      <Section title="What we extracted">
+      <Section title="What we captured">
         <StatGrid
           items={[
-            { label: "Inputs", value: c.inputs ?? 0 },
-            { label: "Buttons", value: c.buttons ?? 0 },
-            { label: "Forms", value: c.forms ?? 0 },
-            { label: "Nav links", value: c.nav_links ?? 0 },
+            {
+              label: "HTML chars",
+              value: (data.html_chars ?? 0).toLocaleString(),
+            },
+            {
+              label: "Links",
+              value: data.link_count ?? data.links?.length ?? 0,
+            },
           ]}
         />
         <p className="mt-2 text-xs text-slate-500">
-          Cookie banners are dismissed, search/menu triggers clicked, and the
-          page is scrolled before snapshotting — so hidden search inputs and
-          mega-menu links should appear below.
+          Cookie / consent overlays are auto-dismissed and the page is fully
+          scrolled before snapshotting. The cleaned HTML is then handed to the
+          AI, which picks the search selectors directly from it — no probing
+          JS is run on the page.
         </p>
       </Section>
 
-      {data.inputs?.length ? (
-        <Section title="Inputs found">
-          <Collapsible title="All inputs" count={data.inputs.length}>
-            <ul className="space-y-1.5">
-              {data.inputs.map((inp, i) => (
-                <li key={i} className="text-sm">
-                  <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[12px] text-slate-800">
-                    {inp.selector || "(no selector)"}
-                  </code>{" "}
-                  <span className="text-slate-500">
-                    type={inp.type}
-                    {inp.placeholder ? ` · placeholder="${inp.placeholder}"` : ""}
-                    {inp.aria_label ? ` · aria="${inp.aria_label}"` : ""}
-                    {inp.parent_hint ? ` · in "${inp.parent_hint}"` : ""}
-                    {inp.visible === false ? " · hidden" : ""}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </Collapsible>
-        </Section>
-      ) : null}
-
-      {data.buttons?.length ? (
-        <Section title="Buttons found">
-          <Collapsible title="All buttons" count={data.buttons.length}>
-            <ul className="space-y-1.5">
-              {data.buttons.map((b, i) => (
-                <li key={i} className="text-sm">
-                  <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[12px] text-slate-800">
-                    {b.selector || "(no selector)"}
-                  </code>{" "}
-                  <span className="text-slate-700">
-                    "{b.text || b.aria_label || ""}"
-                  </span>
-                  {b.has_icon && (
-                    <span className="ml-1 text-[11px] text-slate-500">· icon</span>
-                  )}
-                  {b.aria_haspopup && (
-                    <span className="ml-1 text-[11px] text-slate-500">
-                      · haspopup={b.aria_haspopup}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </Collapsible>
-        </Section>
-      ) : null}
-
-      {data.nav_links?.length ? (
-        <Section title="Navigation links (header / nav / footer)">
-          <Collapsible title="All nav links" count={data.nav_links.length}>
-            <ul className="space-y-1">
-              {data.nav_links.map((l, i) => (
-                <li key={i} className="flex flex-wrap items-center gap-1.5 text-sm">
-                  <SourcePill source={l.source} />
-                  <span className="text-slate-700">{l.text}</span>
-                  <span className="text-slate-400">·</span>
-                  <Link href={l.href} />
-                </li>
-              ))}
-            </ul>
+      {data.links?.length ? (
+        <Section title="Links on the homepage">
+          <Collapsible title="All links" count={data.links.length}>
+            <LinksList links={data.links} />
           </Collapsible>
         </Section>
       ) : null}
@@ -338,25 +233,27 @@ function AnalyzeUIView({
       has_search_box?: boolean;
       search_input_selector?: string | null;
       search_button_selector?: string | null;
-      support_url?: string | null;
+      search_page_url?: string | null;
     };
     input_sent_summary?: {
       page_title?: string;
-      inputs?: number;
-      buttons?: number;
-      nav_links?: number;
+      page_url?: string;
+      html_chars?: number;
+      link_count?: number;
     };
   };
 }) {
   const a = data.analysis ?? {};
+  const s = data.input_sent_summary ?? {};
   return (
     <>
       <Section title="What the AI analyzed">
         <p className="text-sm text-slate-700">
-          We sent the homepage's UI skeleton ({data.input_sent_summary?.inputs ?? 0}{" "}
-          inputs, {data.input_sent_summary?.buttons ?? 0} buttons,{" "}
-          {data.input_sent_summary?.nav_links ?? 0} nav links) and asked the AI to
-          identify the product search box — or, failing that, a likely support page.
+          We sent the homepage's cleaned HTML (
+          {(s.html_chars ?? 0).toLocaleString()} characters,{" "}
+          {s.link_count ?? 0} links) and asked the AI to read it and pick the
+          search input + button selectors — or, failing that, a link to a
+          dedicated search page.
         </p>
       </Section>
 
@@ -379,12 +276,12 @@ function AnalyzeUIView({
               </code>
             </KV>
           )}
-          {a.support_url ? (
-            <KV k="Fallback support URL">
-              <Link href={a.support_url} />
+          {a.search_page_url ? (
+            <KV k="Fallback search page URL">
+              <Link href={a.search_page_url} />
             </KV>
           ) : (
-            <KV k="Fallback support URL">
+            <KV k="Fallback search page URL">
               <span className="italic text-slate-500">none</span>
             </KV>
           )}
@@ -547,192 +444,168 @@ function FilterResultsView({
   );
 }
 
-function OpenProductPageView({
-  data,
-}: {
-  data: {
-    final_url?: string;
-    status?: number;
-    markdown_chars?: number;
-    markdown?: string;
-    link_counts?: { internal?: number; external?: number };
-    links?: LinkRow[];
+interface HopRow {
+  hop: number;
+  url: string;
+  final_url?: string;
+  markdown_chars?: number;
+  link_count?: number;
+  extraction?: {
+    final?: boolean;
+    follow_url?: string | null;
+    reason?: string | null;
+    manuals?: ManualEntry[];
   };
-}) {
-  return (
-    <>
-      <Section title="Product page loaded">
-        <div className="space-y-1">
-          {data.final_url && (
-            <KV k="URL">
-              <Link href={data.final_url} />
-            </KV>
-          )}
-          <KV k="HTTP status">
-            <Pill tone={data.status && data.status >= 400 ? "rose" : "emerald"}>
-              {data.status ?? "—"}
-            </Pill>
-          </KV>
-        </div>
-      </Section>
-      <Section title="Content">
-        <StatGrid
-          items={[
-            { label: "Markdown chars", value: (data.markdown_chars ?? 0).toLocaleString() },
-            { label: "Internal links", value: data.link_counts?.internal ?? 0 },
-            { label: "External links", value: data.link_counts?.external ?? 0 },
-          ]}
-        />
-      </Section>
-      {data.markdown ? (
-        <Section title="Page content (full markdown)">
-          <MarkdownPanel markdown={data.markdown} />
-        </Section>
-      ) : null}
-      {data.links?.length ? (
-        <Section title="Links on this page">
-          <Collapsible title="All links" count={data.links.length}>
-            <LinksList links={data.links} />
-          </Collapsible>
-        </Section>
-      ) : null}
-    </>
-  );
-}
-
-function ExpandSectionsView({
-  data,
-}: {
-  data: {
-    chars_before?: number;
-    chars_after?: number;
-    delta_chars?: number;
-    markdown?: string;
-    link_counts?: { internal?: number; external?: number };
-    links?: LinkRow[];
-  };
-}) {
-  const delta = data.delta_chars ?? 0;
-  const tone = delta > 0 ? "emerald" : delta < 0 ? "amber" : "slate";
-  const sign = delta > 0 ? "+" : "";
-  return (
-    <>
-      <Section title="What changed">
-        <StatGrid
-          items={[
-            { label: "Before", value: (data.chars_before ?? 0).toLocaleString() },
-            { label: "After", value: (data.chars_after ?? 0).toLocaleString() },
-            {
-              label: "Delta",
-              value: (
-                <Pill tone={tone}>
-                  {sign}
-                  {delta.toLocaleString()}
-                </Pill>
-              ),
-            },
-            {
-              label: "Total links",
-              value:
-                (data.link_counts?.internal ?? 0) + (data.link_counts?.external ?? 0),
-            },
-          ]}
-        />
-        <p className="mt-2 text-xs text-slate-500">
-          {delta > 0
-            ? "Expanding tabs and accordions revealed additional content — manuals are usually inside those panels."
-            : delta < 0
-            ? "Page content was slightly smaller after expansion — likely because tabs replaced their summary text."
-            : "No new content was revealed. The page may not have collapsible sections, or the manual is already visible."}
-        </p>
-      </Section>
-      {data.markdown ? (
-        <Section title="Expanded content (full markdown)">
-          <MarkdownPanel markdown={data.markdown} />
-        </Section>
-      ) : null}
-      {data.links?.length ? (
-        <Section title="Links after expansion">
-          <Collapsible title="All links" count={data.links.length}>
-            <LinksList links={data.links} />
-          </Collapsible>
-        </Section>
-      ) : null}
-    </>
-  );
+  extracted_raw?: string;
 }
 
 function FindManualView({
   data,
 }: {
   data: {
-    locator?: {
-      type?: "link" | "html_url" | "inline" | "not_found";
-      url?: string | null;
-      content?: string | null;
-    };
-    links_seen?: number;
-    markdown_chars?: number;
-    product_markdown?: string;
-    product_links?: LinkRow[];
+    manuals?: ManualEntry[];
+    manual_count?: number;
+    hops?: HopRow[];
+    hops_used?: number;
+    last_markdown?: string;
+    last_links?: LinkRow[];
   };
 }) {
-  const t = data.locator?.type ?? "not_found";
-  const TONES = {
-    link: { tone: "emerald" as const, icon: FileDown, label: "Downloadable file" },
-    html_url: { tone: "emerald" as const, icon: Globe, label: "Online HTML manual" },
-    inline: { tone: "emerald" as const, icon: FileText, label: "Inline content on page" },
-    not_found: { tone: "rose" as const, icon: Search, label: "No manual found" },
-  };
-  const m = TONES[t];
+  const manuals = data.manuals ?? [];
+  const hops = data.hops ?? [];
+  const found = manuals.length > 0;
   return (
     <>
       <Section title="What the AI found">
         <div className="mb-2 flex items-center gap-2">
-          <Pill tone={m.tone}>
-            <m.icon className="mr-1 h-3.5 w-3.5" />
-            {m.label}
-          </Pill>
-        </div>
-        <div className="space-y-1">
-          {data.locator?.url && (
-            <KV k="Manual URL">
-              <Link href={data.locator.url} />
-            </KV>
+          {found ? (
+            <Pill tone="emerald">
+              <CheckCircle2 className="mr-1 h-3.5 w-3.5" />
+              {manuals.length} manual{manuals.length > 1 ? "s" : ""} found
+            </Pill>
+          ) : (
+            <Pill tone="rose">
+              <Search className="mr-1 h-3.5 w-3.5" />
+              No manual found
+            </Pill>
           )}
-          {data.locator?.content && (
-            <KV k="Inline content">
-              <span className="text-slate-700">
-                {data.locator.content.length.toLocaleString()} characters of text
-              </span>
-            </KV>
-          )}
+          <span className="text-xs text-slate-500">
+            after {data.hops_used ?? hops.length} hop
+            {(data.hops_used ?? hops.length) === 1 ? "" : "s"}
+          </span>
         </div>
+        {found && (
+          <ul className="space-y-2">
+            {manuals.map((m, i) => (
+              <li key={i}>
+                <ManualEntryRow entry={m} />
+              </li>
+            ))}
+          </ul>
+        )}
       </Section>
-      {data.locator?.content ? (
-        <Section title="Inline manual content">
-          <MarkdownPanel markdown={data.locator.content} />
+
+      {hops.length > 0 && (
+        <Section title="Extraction hops">
+          <ol className="space-y-2">
+            {hops.map((h) => (
+              <li key={h.hop}>
+                <HopRowView hop={h} />
+              </li>
+            ))}
+          </ol>
+        </Section>
+      )}
+
+      {data.last_markdown ? (
+        <Section title="Last page content (full markdown)">
+          <MarkdownPanel markdown={data.last_markdown} />
         </Section>
       ) : null}
-      <Section title="What the AI looked at">
-        <p className="text-xs text-slate-500">
-          Reviewed {data.links_seen ?? 0} links and{" "}
-          {(data.markdown_chars ?? 0).toLocaleString()} characters of page content.
-        </p>
-      </Section>
-      {data.product_markdown ? (
-        <Section title="Product page content (full markdown)">
-          <MarkdownPanel markdown={data.product_markdown} />
-        </Section>
-      ) : null}
-      {data.product_links?.length ? (
-        <Section title="Product page links">
-          <Collapsible title="All links" count={data.product_links.length}>
-            <LinksList links={data.product_links} />
+
+      {data.last_links?.length ? (
+        <Section title="Last page links">
+          <Collapsible title="All links" count={data.last_links.length}>
+            <LinksList links={data.last_links} />
           </Collapsible>
         </Section>
       ) : null}
     </>
+  );
+}
+
+function ManualEntryRow({ entry }: { entry: ManualEntry }) {
+  const TYPE_META = {
+    link: { tone: "emerald" as const, icon: FileDown, label: "Downloadable file" },
+    html_url: { tone: "emerald" as const, icon: Globe, label: "Online HTML manual" },
+    inline: { tone: "emerald" as const, icon: FileText, label: "Inline content" },
+  };
+  const meta = TYPE_META[entry.type];
+  return (
+    <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 px-3 py-2">
+      <div className="mb-1 flex flex-wrap items-center gap-2">
+        <Pill tone={meta.tone}>
+          <meta.icon className="mr-1 h-3.5 w-3.5" />
+          {meta.label}
+        </Pill>
+        {entry.language && <Pill tone="slate">{entry.language}</Pill>}
+        {entry.label && (
+          <span className="text-sm font-medium text-slate-800">{entry.label}</span>
+        )}
+      </div>
+      {entry.url && (
+        <div className="text-sm">
+          <Link href={entry.url} />
+        </div>
+      )}
+      {entry.content && (
+        <details className="mt-1">
+          <summary className="cursor-pointer text-xs text-slate-500 hover:text-slate-700">
+            Show inline content ({entry.content.length.toLocaleString()} chars)
+          </summary>
+          <div className="mt-2">
+            <MarkdownPanel markdown={entry.content} />
+          </div>
+        </details>
+      )}
+    </div>
+  );
+}
+
+function HopRowView({ hop }: { hop: HopRow }) {
+  const ex = hop.extraction ?? {};
+  const isFinal = ex.final !== false;
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2">
+      <div className="flex flex-wrap items-center gap-2">
+        <Pill tone="brand">Hop {hop.hop}</Pill>
+        <Pill tone={isFinal ? "emerald" : "amber"}>
+          {isFinal ? "final" : "follow-up"}
+        </Pill>
+        <span className="text-xs text-slate-500">
+          {(hop.markdown_chars ?? 0).toLocaleString()} chars · {hop.link_count ?? 0} links
+        </span>
+      </div>
+      <div className="mt-1 text-sm">
+        <Link href={hop.url} />
+      </div>
+      {ex.reason && (
+        <p className="mt-1 text-xs italic text-slate-500">Reason: {ex.reason}</p>
+      )}
+      {ex.follow_url && !isFinal && (
+        <div className="mt-1 flex items-center gap-1.5 text-xs text-slate-600">
+          <ArrowRight className="h-3 w-3" />
+          <Link href={ex.follow_url} label="follow next" />
+        </div>
+      )}
+      {ex.manuals && ex.manuals.length > 0 && (
+        <div className="mt-2 space-y-1.5">
+          {ex.manuals.map((m, i) => (
+            <ManualEntryRow entry={m} key={i} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -744,9 +617,11 @@ function FinalizeView({
     url?: string | null;
     content?: string | null;
     content_chars?: number;
+    manuals?: ManualEntry[];
   };
 }) {
   const t = data.type ?? "not_found";
+  const manuals = data.manuals ?? [];
   return (
     <>
       <Section title="Final result">
@@ -762,20 +637,32 @@ function FinalizeView({
                 : "No manual found"}
             </Pill>
           </KV>
+          <KV k="Manuals collected">{manuals.length}</KV>
           {data.url && (
-            <KV k="Manual URL">
+            <KV k="Primary URL">
               <Link href={data.url} />
             </KV>
           )}
           {(data.content || data.content_chars) && (
-            <KV k="Content length">
+            <KV k="Primary content length">
               {(data.content_chars ?? data.content?.length ?? 0).toLocaleString()} characters
             </KV>
           )}
         </div>
       </Section>
+      {manuals.length > 0 && (
+        <Section title={`All manuals (${manuals.length})`}>
+          <ul className="space-y-2">
+            {manuals.map((m, i) => (
+              <li key={i}>
+                <ManualEntryRow entry={m} />
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
       {data.content ? (
-        <Section title="Manual content (full markdown)">
+        <Section title="Primary manual content (full markdown)">
           <MarkdownPanel markdown={data.content} />
         </Section>
       ) : null}

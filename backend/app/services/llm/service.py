@@ -7,7 +7,7 @@ returns invalid JSON, we retry with a stricter "JSON ONLY" reminder.
 from __future__ import annotations
 
 import json
-from typing import Iterable, Type, TypeVar
+from typing import Type, TypeVar
 
 from pydantic import BaseModel, ValidationError
 from tenacity import (
@@ -20,12 +20,10 @@ from tenacity import (
 
 from app.core.config import get_settings
 from app.core.logging import get_logger
-from app.schemas.llm import ManualLocator, ProductMatch, UIAnalysis
+from app.schemas.llm import ProductMatch, UIAnalysis
 from app.services.llm.base import LLMProvider
 from app.services.llm.gemini import GeminiProvider
 from app.services.llm.prompts import (
-    MANUAL_FINDER_SYSTEM,
-    MANUAL_FINDER_TEMPLATE,
     PRODUCT_MATCH_SYSTEM,
     PRODUCT_MATCH_TEMPLATE,
     UI_ANALYSIS_SYSTEM,
@@ -47,9 +45,17 @@ class LLMService:
         self._provider = provider
         self._max_retries = max_retries
 
-    async def analyze_ui(self, ui_data: dict) -> UIAnalysis:
+    async def analyze_ui(
+        self,
+        *,
+        page_url: str,
+        page_title: str,
+        html: str,
+    ) -> UIAnalysis:
         prompt = UI_ANALYSIS_TEMPLATE.format(
-            ui_data=json.dumps(ui_data, ensure_ascii=False)[:18_000]
+            page_url=page_url,
+            page_title=page_title or "(no title)",
+            html=html[:80_000],
         )
         return await self._call_validated(prompt, UI_ANALYSIS_SYSTEM, UIAnalysis)
 
@@ -57,29 +63,16 @@ class LLMService:
         self,
         product_name: str,
         product_code: str,
-        results: Iterable[dict],
+        markdown: str,
+        links: list[dict],
     ) -> ProductMatch:
         prompt = PRODUCT_MATCH_TEMPLATE.format(
             product_name=product_name,
             product_code=product_code,
-            results=json.dumps(list(results), ensure_ascii=False)[:18_000],
+            markdown=markdown[:18_000],
+            links=json.dumps(links, ensure_ascii=False)[:8_000],
         )
         return await self._call_validated(prompt, PRODUCT_MATCH_SYSTEM, ProductMatch)
-
-    async def find_manual(
-        self,
-        product_name: str,
-        product_code: str,
-        markdown: str,
-        links: list[dict],
-    ) -> ManualLocator:
-        prompt = MANUAL_FINDER_TEMPLATE.format(
-            product_name=product_name,
-            product_code=product_code,
-            markdown=markdown[:18_000],
-            links=json.dumps(links[:200], ensure_ascii=False)[:6_000],
-        )
-        return await self._call_validated(prompt, MANUAL_FINDER_SYSTEM, ManualLocator)
 
     # ------------------------------------------------------------------ internal
 

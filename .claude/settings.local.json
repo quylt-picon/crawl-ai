@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(docker --version)",
-      "Bash(docker compose *)"
+      "Bash(docker compose *)",
+      "Bash(npx tsc *)",
+      "Bash(npx -y tsc@5.4 --noEmit)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(./node_modules/.bin/tsc --version)",
+      "Bash(./node_modules/.bin/tsc --noEmit --ignoreDeprecations \"5.0\")"
     ]
   }
 }

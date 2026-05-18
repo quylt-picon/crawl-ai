@@ -135,20 +135,17 @@ function StepIntro({ step }: { step?: StepId }) {
 
 const STEP_DESCRIPTIONS: Record<StepId, string> = {
   crawl_homepage:
-    "Opens the homepage and reads its UI skeleton — forms, inputs, buttons, navigation links.",
+    "Opens the homepage with popups auto-dismissed and the page fully scrolled, then captures the final rendered HTML.",
   analyze_ui:
-    "Asks the AI: does this homepage have a product search box? If yes, it returns CSS selectors. If no, it picks the most likely support/product page link.",
+    "Hands the homepage HTML to the AI: does this page have a product search box? If yes, return the search input + button CSS selectors. If no, pick a link to a dedicated search page.",
   search_product:
-    "Types the product code into the search input and submits. If the homepage had no search, opens the support page and tries again there.",
+    "Types the product code into the search input and submits. If the homepage had no search, opens the dedicated search page from step 2 and tries again there. Header/footer/nav are stripped from the results so only the product body is kept.",
   filter_results:
-    "Reads the search results page, narrows links by a simple filter, then asks the AI to pick the URL of the matching product page.",
-  open_product_page: "Opens the product detail page the AI selected.",
-  expand_sections:
-    "Re-opens the product page and auto-clicks tabs/accordions labeled 'support', 'manuals', 'downloads' so hidden content becomes visible.",
+    "Sends the full results markdown plus every link on the page to the AI and asks it to pick the single most relevant product detail URL.",
   find_manual:
-    "Asks the AI to classify the manual: a downloadable file, an online HTML page, inline content on the page, or nothing found.",
+    "Opens the product page with header/footer stripped and runs an LLM extraction strategy on it. If the manual lives on a separate support/downloads page, follows that link and extracts again (up to a few hops). Returns every manual found, across languages and variants.",
   finalize:
-    "Wraps up the manual: a download URL is returned directly; an HTML manual is fetched into clean text; inline content is kept as-is.",
+    "Wraps up the manual list: a download URL is returned directly; an HTML manual is fetched into clean text; inline content is kept as-is. All manuals collected from extraction are preserved.",
 };
 
 function formatTime(ts: string): string {

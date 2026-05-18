@@ -9,8 +9,6 @@ class StepId(str, Enum):
     ANALYZE_UI = "analyze_ui"
     SEARCH_PRODUCT = "search_product"
     FILTER_RESULTS = "filter_results"
-    OPEN_PRODUCT_PAGE = "open_product_page"
-    EXPAND_SECTIONS = "expand_sections"
     FIND_MANUAL = "find_manual"
     FINALIZE = "finalize"
 
@@ -28,8 +26,6 @@ STEP_LABELS: dict[StepId, str] = {
     StepId.ANALYZE_UI: "Analyzing UI structure",
     StepId.SEARCH_PRODUCT: "Searching product",
     StepId.FILTER_RESULTS: "Filtering search results",
-    StepId.OPEN_PRODUCT_PAGE: "Opening product page",
-    StepId.EXPAND_SECTIONS: "Expanding tabs & sections",
-    StepId.FIND_MANUAL: "Finding user manual",
+    StepId.FIND_MANUAL: "Extracting manual",
     StepId.FINALIZE: "Finalizing result",
 }

@@ -13,8 +13,6 @@ export const STEP_ORDER: StepId[] = [
   "analyze_ui",
   "search_product",
   "filter_results",
-  "open_product_page",
-  "expand_sections",
   "find_manual",
   "finalize",
 ];
@@ -24,9 +22,7 @@ export const STEP_LABELS: Record<StepId, string> = {
   analyze_ui: "Analyze UI",
   search_product: "Search product",
   filter_results: "Filter results",
-  open_product_page: "Open product page",
-  expand_sections: "Expand tabs & sections",
-  find_manual: "Find user manual",
+  find_manual: "Extract manual",
   finalize: "Finalize result",
 };
 

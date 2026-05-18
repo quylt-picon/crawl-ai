@@ -5,10 +5,18 @@ export type StepId =
   | "analyze_ui"
   | "search_product"
   | "filter_results"
-  | "open_product_page"
-  | "expand_sections"
   | "find_manual"
   | "finalize";
+
+export type ManualEntryType = "link" | "html_url" | "inline";
+
+export interface ManualEntry {
+  type: ManualEntryType;
+  url?: string | null;
+  content?: string | null;
+  language?: string | null;
+  label?: string | null;
+}
 
 export interface ProgressEvent {
   job_id: string;
@@ -41,6 +49,7 @@ export interface ManualResult {
   type: "link" | "html_url" | "inline" | "not_found";
   url?: string | null;
   content?: string | null;
+  manuals?: ManualEntry[];
 }
 
 export interface JobCreatedResponse {
