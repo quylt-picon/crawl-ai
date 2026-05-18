@@ -12,7 +12,7 @@ from pathlib import Path
 
 from crawl4ai import AsyncWebCrawler, BrowserConfig, CacheMode, CrawlerRunConfig
 
-TARGET_URL = "https://www.panasonic.com/vn/consumer/home-appliances/fridge/prime-edition/nr-yw590xjkv.html"
+TARGET_URL = "https://www.panasonic.com/vn/consumer/home-appliances/fridge/prime-edition/NA-F85S11BRV.html"
 OUTPUT_DIR = Path("output")
 
 

@@ -19,13 +19,13 @@ from pydantic import BaseModel, Field
 from crawl4ai import AsyncWebCrawler, BrowserConfig, CacheMode, CrawlerRunConfig, LLMConfig
 from crawl4ai.extraction_strategy import LLMExtractionStrategy
 
-TARGET_URL = "https://www.panasonic.com/vn/consumer/home-appliances/fridge/prime-edition/nr-yw590xjkv.html"
+TARGET_URL = "https://www.panasonic.com/vn/consumer/home-appliances/fridge/prime-edition/NA-F85S11BRV.html"
 OUTPUT_DIR = Path("output")
 
 
 class ProductInfo(BaseModel):
     name: str = Field(..., description="Tên đầy đủ của sản phẩm")
-    model: Optional[str] = Field(None, description="Mã model sản phẩm (ví dụ: NR-YW590XJKV)")
+    model: Optional[str] = Field(None, description="Mã model sản phẩm (ví dụ: NA-F85S11BRV)")
     category: Optional[str] = Field(None, description="Nhóm sản phẩm (ví dụ: Tủ lạnh)")
     capacity: Optional[str] = Field(None, description="Dung tích sản phẩm, nếu có")
     key_features: List[str] = Field(default_factory=list, description="Các tính năng nổi bật")
