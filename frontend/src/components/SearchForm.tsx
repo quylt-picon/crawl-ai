@@ -1,6 +1,13 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Search } from "lucide-react";
 import type { SearchInput } from "@/lib/api";
+
+interface Preset {
+  label: string;
+  website_url: string;
+  product_name: string;
+  product_code: string;
+}
 
 interface Props {
   onSubmit: (input: SearchInput) => void;
@@ -9,10 +16,30 @@ interface Props {
 
 export function SearchForm({ onSubmit, disabled }: Props) {
   const [websiteUrl, setWebsiteUrl] = useState(
-    "https://www.panasonic.com/vn"
+    ""
   );
-  const [productName, setProductName] = useState("Máy giặt cửa trên");
-  const [productCode, setProductCode] = useState("NA-F85S11BRV");
+  const [productName, setProductName] = useState("");
+  const [productCode, setProductCode] = useState("");
+  const [presets, setPresets] = useState<Preset[]>([]);
+  const [selectedPreset, setSelectedPreset] = useState<string>("");
+
+  useEffect(() => {
+    fetch("/presets.json")
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data: Preset[]) => setPresets(Array.isArray(data) ? data : []))
+      .catch(() => setPresets([]));
+  }, []);
+
+  const onPresetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const idx = e.target.value;
+    setSelectedPreset(idx);
+    if (idx === "") return;
+    const preset = presets[Number(idx)];
+    if (!preset) return;
+    setWebsiteUrl(preset.website_url);
+    setProductName(preset.product_name);
+    setProductCode(preset.product_code);
+  };
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -30,6 +57,24 @@ export function SearchForm({ onSubmit, disabled }: Props) {
         <h2 className="text-base font-semibold text-slate-900">Search a product manual</h2>
       </div>
       <div className="card-body grid grid-cols-1 gap-4 md:grid-cols-3">
+        {presets.length > 0 && (
+          <div className="md:col-span-3">
+            <label className="label" htmlFor="preset">Preset</label>
+            <select
+              id="preset"
+              className="input"
+              value={selectedPreset}
+              onChange={onPresetChange}
+            >
+              <option value="">— Chọn preset có sẵn —</option>
+              {presets.map((p, i) => (
+                <option key={i} value={i}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="md:col-span-3">
           <label className="label" htmlFor="website_url">Website URL</label>
           <input

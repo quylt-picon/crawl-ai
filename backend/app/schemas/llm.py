@@ -10,6 +10,10 @@ class UIAnalysis(BaseModel):
     has_search_box: bool = False
     search_input_selector: Optional[str] = None
     search_button_selector: Optional[str] = None
+    # Element that must be clicked BEFORE the input is reachable — typically
+    # the magnifier-icon trigger on sites where the search UI is lazy-mounted
+    # into a popup/modal. Empty string when the input is already in the DOM.
+    search_trigger_selector: Optional[str] = None
     search_page_url: Optional[str] = None
 
 

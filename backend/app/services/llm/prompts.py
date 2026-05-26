@@ -24,11 +24,20 @@ Definitions:
   matches search/find/query/seek. Hidden inputs are valid candidates —
   sites often hide them behind a magnifier-icon trigger.
   Reject generic newsletter / email-signup / login inputs.
-- A "search button" is the submit button OR a search-icon trigger that
-  reveals/submits the input. Strong signals: type="submit" inside the same
-  form, text/aria-label/title containing "search", aria-haspopup set,
-  aria-controls pointing at a search region, OR an icon-only button with
-  an SVG/i.icon-search inside no text.
+- A "search TRIGGER" is a header element that opens a search popup/modal
+  on click but does NOT itself contain the input — the input is only
+  mounted into the DOM AFTER the click. Strong signals: an icon-only
+  button or anchor in the header with aria-label/title/text matching
+  "search", "find", "tìm kiếm", "tra cứu"; aria-haspopup="dialog";
+  aria-controls pointing at a search-modal id; class names containing
+  "search-toggle", "search-icon", "open-search", "header-search",
+  "magnifier", "icon-search"; an <svg> child whose use/path looks like a
+  magnifier glass. The trigger may be the ONLY search element in the DOM
+  when the modal is lazy-mounted.
+- A "search button" is the submit button INSIDE the search UI once it is
+  open — type="submit" inside the same form, text/aria-label/title
+  containing "search", an icon-only button with magnifier SVG. If Enter
+  alone submits, this can be empty.
 - A "search page" is a separate page dedicated to product search — a link
   the user would click to *go to* a search experience when the homepage
   itself doesn't expose one. Strong signals on the anchor:
@@ -41,14 +50,23 @@ Definitions:
     (magnifier-glass link).
 
 Tasks:
-1. Decide whether the homepage has a search box per the definition above.
-2. If yes, return CSS selectors that document.querySelector can resolve:
-   - search_input_selector: prefer #id (e.g. "#global-search-input"), then
-     [name="..."], then a stable class chain. Hidden inputs are fine.
-   - search_button_selector: prefer an explicit submit/search button. If
-     only a magnifier-icon trigger exists, return it — the runtime will
-     click it. If no button is needed (Enter alone submits), return an
-     empty string.
+1. Decide whether the homepage exposes a product search — EITHER an input
+   already in the DOM OR a trigger that opens the search popup. Set
+   has_search_box=true in both cases. Only set it to false when neither a
+   visible/hidden input NOR a trigger exists.
+2. Fill the selectors. document.querySelector must be able to resolve each.
+   Prefer #id, then [name="..."], then a short stable class chain.
+   - search_trigger_selector: the magnifier-icon button/anchor that must
+     be clicked FIRST to mount the popup. Leave empty if the input is
+     already in the page (no click needed).
+   - search_input_selector: the input the user types into. If only a
+     trigger exists and you cannot see the input yet, make a best-guess
+     selector that will match the input AFTER the popup opens (e.g.
+     ".search-modal input[type=search]", "#search-modal-input",
+     "[role=dialog] input[type=text]"). The runtime polls for it after
+     clicking the trigger, so a stable class/role-based selector is fine.
+   - search_button_selector: submit button inside the search UI. Empty if
+     pressing Enter is enough.
 3. ALWAYS try to return a search_page_url — even when has_search_box is
    true — so we have a fallback if the inline search fails. Look only for
    links to a dedicated search experience per the "search page"
@@ -65,6 +83,7 @@ Return JSON ONLY in this exact shape:
   "has_search_box": true,
   "search_input_selector": "",
   "search_button_selector": "",
+  "search_trigger_selector": "",
   "search_page_url": ""
 }}
 

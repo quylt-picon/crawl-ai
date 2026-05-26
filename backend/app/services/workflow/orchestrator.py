@@ -8,6 +8,8 @@ reported via the emitter — exceptions only bubble for truly unexpected bugs.
 from __future__ import annotations
 
 import json
+import re
+from urllib.parse import quote
 
 from pydantic import ValidationError
 
@@ -56,11 +58,20 @@ class WorkflowOrchestrator:
     ) -> ManualResult:
         try:
             snapshot = await self._step_crawl_homepage(website_url, emitter)
-            analysis = await self._step_analyze_ui(snapshot, emitter)
+            # Skip the LLM UI-analysis call when the homepage already exposes
+            # a schema.org SearchAction template — the fast-path can build
+            # the search URL directly without knowing input/button selectors.
+            # We only fall back to analysis if the fast-path produces nothing
+            # usable (handled lazily inside _step_search_product).
+            if snapshot.search_action_url_template:
+                analysis: UIAnalysis | None = None
+            else:
+                analysis = await self._step_analyze_ui(snapshot, emitter)
             search_page = await self._step_search_product(
                 website_url=website_url,
                 product_code=product_code,
                 analysis=analysis,
+                homepage_snapshot=snapshot,
                 emitter=emitter,
             )
             match = await self._step_filter_results(
@@ -176,7 +187,8 @@ class WorkflowOrchestrator:
         *,
         website_url: str,
         product_code: str,
-        analysis: UIAnalysis,
+        analysis: UIAnalysis | None,
+        homepage_snapshot: HomepageSnapshot,
         emitter: Emitter,
     ) -> CrawlResult:
         await emitter.progress(
@@ -185,16 +197,82 @@ class WorkflowOrchestrator:
             "Performing product search",
         )
 
-        if analysis.has_search_box and analysis.search_input_selector:
+        # Fast path: most e-commerce sites publish a schema.org SearchAction
+        # in JSON-LD with a urlTemplate like ".../search?q={search_term_string}".
+        # Using it bypasses popup/typing — fewer moving parts than driving a
+        # magnifier-icon trigger that mounts the input lazily. Some sites
+        # publish the *homepage* URL as the template (it just opens a modal),
+        # so we also probe ``/search/`` variants and keep the response with
+        # the most content.
+        sa_template = homepage_snapshot.search_action_url_template
+        if sa_template:
+            candidates = _build_search_url_candidates(sa_template, product_code)
             await emitter.log(
-                f"Typing '{product_code}' into {analysis.search_input_selector!r}",
+                f"Found schema.org SearchAction template. Trying {len(candidates)} URL "
+                f"candidate(s): {', '.join(candidates)}",
                 step=StepId.SEARCH_PRODUCT,
             )
+            best: CrawlResult | None = None
+            best_score = -1
+            for url_candidate in candidates:
+                try:
+                    page = await self._crawl.fetch_search_results(url_candidate)
+                except CrawlError as exc:
+                    await emitter.log(
+                        f"Fast-path candidate {url_candidate} failed: {exc}",
+                        step=StepId.SEARCH_PRODUCT,
+                        level="warning",
+                    )
+                    continue
+                score = _score_search_results(page, product_code)
+                await emitter.log(
+                    f"Fast-path candidate {url_candidate}: status={page.status_code}, "
+                    f"{len(page.markdown):,} md chars, {len(page.all_links)} links, score={score}",
+                    step=StepId.SEARCH_PRODUCT,
+                )
+                if score > best_score:
+                    best = page
+                    best_score = score
+                if score >= _FAST_PATH_GOOD_SCORE:
+                    # A link path already matches the product code — that's
+                    # a real results page; no need to probe more candidates.
+                    break
+            if best is not None and best_score > 0:
+                await self._emit_search_success(best, emitter)
+                return best
+            await emitter.log(
+                "SearchAction fast-path produced no result-looking page; "
+                "falling back to interactive search.",
+                step=StepId.SEARCH_PRODUCT,
+                level="warning",
+            )
+
+        # The fast-path failed (or there was no template). We need UI
+        # selectors to drive the interactive search — analyze now if we
+        # skipped it earlier.
+        if analysis is None:
+            analysis = await self._step_analyze_ui(homepage_snapshot, emitter)
+
+        if analysis.has_search_box and (
+            analysis.search_input_selector or analysis.search_trigger_selector
+        ):
+            if analysis.search_trigger_selector:
+                await emitter.log(
+                    f"Clicking trigger {analysis.search_trigger_selector!r} to open search popup, "
+                    f"then typing '{product_code}' into {analysis.search_input_selector!r}",
+                    step=StepId.SEARCH_PRODUCT,
+                )
+            else:
+                await emitter.log(
+                    f"Typing '{product_code}' into {analysis.search_input_selector!r}",
+                    step=StepId.SEARCH_PRODUCT,
+                )
             page = await self._crawl.search_via_selectors(
                 url=website_url,
-                input_selector=analysis.search_input_selector,
+                input_selector=analysis.search_input_selector or "",
                 button_selector=analysis.search_button_selector,
                 query=product_code,
+                trigger_selector=analysis.search_trigger_selector,
             )
         else:
             search_page_url = analysis.search_page_url
@@ -213,15 +291,23 @@ class WorkflowOrchestrator:
                 page_title=search_page_snapshot.page_title,
                 html=search_page_snapshot.html,
             )
-            if not (sub_analysis.has_search_box and sub_analysis.search_input_selector):
+            if not (
+                sub_analysis.has_search_box
+                and (sub_analysis.search_input_selector or sub_analysis.search_trigger_selector)
+            ):
                 raise WorkflowError("Could not locate a search input on the search page.")
             page = await self._crawl.search_via_selectors(
                 url=search_page_url,
-                input_selector=sub_analysis.search_input_selector,
+                input_selector=sub_analysis.search_input_selector or "",
                 button_selector=sub_analysis.search_button_selector,
                 query=product_code,
+                trigger_selector=sub_analysis.search_trigger_selector,
             )
 
+        await self._emit_search_success(page, emitter)
+        return page
+
+    async def _emit_search_success(self, page: CrawlResult, emitter: Emitter) -> None:
         await emitter.progress(
             StepId.SEARCH_PRODUCT,
             StepStatus.SUCCESS,
@@ -238,7 +324,6 @@ class WorkflowOrchestrator:
                 "links": page.all_links,
             },
         )
-        return page
 
     # ----------------------------------------------------------- STEP 4
 
@@ -505,6 +590,113 @@ def _parse_manual_extraction(page: ManualExtractionCrawlResult) -> ManualExtract
 
 def _dedup_key(entry: ManualEntry) -> str:
     return f"{entry.type}|{(entry.url or '').strip().lower()}|{(entry.label or '').strip().lower()}"
+
+
+_TEMPLATE_PLACEHOLDER_RE = re.compile(r"\{[^{}]+\}")
+
+
+def _fill_search_template(template: str, query: str) -> str:
+    """Replace any ``{search_term_string}``/``{query}``/``{q}`` placeholder.
+
+    schema.org SearchAction conventionally uses ``{search_term_string}`` but
+    we tolerate any single ``{...}`` slot so we work with custom templates.
+    """
+    encoded = quote(query, safe="")
+    if "{" not in template:
+        # Some sites just publish the base URL; assume a ``q`` query param.
+        sep = "&" if "?" in template else "?"
+        return f"{template}{sep}q={encoded}"
+    return _TEMPLATE_PLACEHOLDER_RE.sub(encoded, template)
+
+
+def _build_search_url_candidates(template: str, query: str) -> list[str]:
+    """Return search URLs to probe, in order of preference.
+
+    The SearchAction template comes first. Many sites publish their HOMEPAGE
+    as the template (intended to open a search modal) — for those we also
+    generate ``/search/`` variants under the same origin and the same
+    leading locale path so the actual server-rendered results page is hit.
+    """
+    from urllib.parse import urlparse, urlunparse
+
+    primary = _fill_search_template(template, query)
+    parsed = urlparse(primary)
+    encoded = quote(query, safe="")
+
+    out: list[str] = [primary]
+    seen = {primary}
+
+    # Determine which query-param name the template uses ("search", "q", …).
+    qs = parsed.query or ""
+    param = "q"
+    if "=" in qs:
+        first = qs.split("&", 1)[0]
+        if "=" in first:
+            param = first.split("=", 1)[0] or "q"
+
+    path = parsed.path or "/"
+    segments = [s for s in path.split("/") if s]
+    locale_prefix = f"/{segments[0]}/" if segments and len(segments[0]) <= 5 else ""
+
+    variants: list[str] = []
+    # Bare /search/, then /search, then under any locale prefix.
+    base_paths = ["/search/", "/search"]
+    if locale_prefix:
+        base_paths = [f"{locale_prefix}search/", f"{locale_prefix}search"] + base_paths
+
+    for new_path in base_paths:
+        candidate = urlunparse((
+            parsed.scheme,
+            parsed.netloc,
+            new_path,
+            "",
+            f"{param}={encoded}",
+            "",
+        ))
+        if candidate not in seen:
+            variants.append(candidate)
+            seen.add(candidate)
+
+    out.extend(variants)
+    return out
+
+
+def _score_search_results(page: CrawlResult, query: str) -> int:
+    """Heuristic score for "did we land on a real results page for ``query``?"
+
+    Heavy weight on links whose URL path (not query string) contains the
+    product code — that's the strongest signal of a results-list page over
+    a homepage redirect that happens to echo the query in its querystring.
+    """
+    if not page.markdown:
+        return 0
+    from urllib.parse import urlparse
+
+    q_lower = query.lower()
+    score = 0
+    for link in page.all_links:
+        href = (link.get("href") or "").strip()
+        if not href:
+            continue
+        try:
+            path = urlparse(href).path.lower()
+        except ValueError:
+            path = ""
+        text = (link.get("text") or "").lower()
+        if q_lower in path:
+            score += 10
+        elif q_lower in text:
+            score += 3
+    # Smaller bonus for the query being echoed anywhere in the rendered text.
+    if q_lower in page.markdown.lower():
+        score += 1
+    return score
+
+
+# Minimum score to short-circuit candidate probing. ≥10 means we found at
+# least one link whose path contains the product code — almost always a
+# real results-list page rather than a homepage redirect.
+_FAST_PATH_GOOD_SCORE = 10
 
 
 # ----------------------------------------------------------------------- factory

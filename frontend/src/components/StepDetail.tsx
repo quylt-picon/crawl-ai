@@ -233,6 +233,7 @@ function AnalyzeUIView({
       has_search_box?: boolean;
       search_input_selector?: string | null;
       search_button_selector?: string | null;
+      search_trigger_selector?: string | null;
       search_page_url?: string | null;
     };
     input_sent_summary?: {
@@ -274,6 +275,17 @@ function AnalyzeUIView({
               <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[12px]">
                 {a.search_button_selector}
               </code>
+            </KV>
+          )}
+          {a.search_trigger_selector ? (
+            <KV k="Search trigger selector">
+              <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[12px]">
+                {a.search_trigger_selector}
+              </code>
+            </KV>
+          ) : (
+            <KV k="Search trigger selector">
+              <span className="italic text-slate-500">none</span>
             </KV>
           )}
           {a.search_page_url ? (

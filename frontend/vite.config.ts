@@ -11,9 +11,10 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    allowedHosts: ["dd-quylt.local"],
     proxy: {
       "/api": {
-        target: "http://localhost:8080",
+        target: "http://dd-quylt.local:8080",
         changeOrigin: true,
       },
     },

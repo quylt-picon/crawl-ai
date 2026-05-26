@@ -1,8 +1,10 @@
-import { Sparkles } from "lucide-react";
+import { useState } from "react";
+import { FileText, Sparkles } from "lucide-react";
 import { SearchForm } from "@/components/SearchForm";
 import { Stepper } from "@/components/Stepper";
 import { Timeline } from "@/components/Timeline";
 import { ManualResultPanel } from "@/components/ManualResultPanel";
+import { WorkflowDiagramModal } from "@/components/WorkflowDiagramModal";
 import { useCrawlJob } from "@/hooks/useCrawlJob";
 import { useWorkflow } from "@/store/workflow";
 
@@ -10,10 +12,11 @@ export default function App() {
   const { submit } = useCrawlJob();
   const running = useWorkflow((s) => s.running);
   const jobId = useWorkflow((s) => s.jobId);
+  const [workflowOpen, setWorkflowOpen] = useState(false);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-6 px-4 py-8 md:px-8">
-      <header className="flex items-center gap-3">
+      <header className="flex flex-wrap items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-white shadow-sm">
           <Sparkles className="h-5 w-5" />
         </div>
@@ -25,11 +28,21 @@ export default function App() {
             AI agent that crawls a website, searches a product, and extracts its user manual.
           </p>
         </div>
-        {jobId && (
-          <span className="ml-auto rounded-full bg-slate-100 px-3 py-1 font-mono text-[11px] text-slate-600">
-            job: {jobId.slice(0, 12)}…
-          </span>
-        )}
+        <div className="ml-auto flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setWorkflowOpen(true)}
+            className="btn-ghost"
+          >
+            <FileText className="h-4 w-4" />
+            View workflow
+          </button>
+          {jobId && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 font-mono text-[11px] text-slate-600">
+              job: {jobId.slice(0, 12)}…
+            </span>
+          )}
+        </div>
       </header>
 
       <SearchForm onSubmit={submit} disabled={running} />
@@ -44,6 +57,8 @@ export default function App() {
       <footer className="mt-auto pt-4 text-center text-xs text-slate-400">
         Backend: FastAPI + Crawl4AI + Gemini · Frontend: React + Vite + Tailwind
       </footer>
+
+      <WorkflowDiagramModal open={workflowOpen} onClose={() => setWorkflowOpen(false)} />
     </div>
   );
 }
