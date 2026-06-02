@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Goc-layered" id="GocV2LayeredArch01">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1750" pageHeight="1120" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ===================== LAYER BANDS ===================== -->
+        <mxCell id="band-client" parent="1" vertex="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;">
+          <mxGeometry x="100" y="60" width="1520" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="band-service" parent="1" vertex="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;">
+          <mxGeometry x="100" y="300" width="1520" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="band-data" parent="1" vertex="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;">
+          <mxGeometry x="100" y="720" width="1520" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="band-external" parent="1" vertex="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;">
+          <mxGeometry x="100" y="950" width="1520" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Layer labels (rotated) -->
+        <mxCell id="lbl-client-t" parent="1" vertex="1" value="CLIENT LAYER" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;">
+          <mxGeometry x="10" y="120" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-service-t" parent="1" vertex="1" value="SERVICE LAYER" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;">
+          <mxGeometry x="10" y="485" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-data-t" parent="1" vertex="1" value="DATA LAYER" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;">
+          <mxGeometry x="10" y="810" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-ext-t" parent="1" vertex="1" value="EXTERNAL SYSTEMS" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;">
+          <mxGeometry x="10" y="990" width="100" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== CLIENT LAYER ===================== -->
+        <mxCell id="chat-ui" parent="1" vertex="1" value="&lt;b&gt;Chat UI / My Page&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;React · SSE&lt;/span&gt;&lt;br&gt;• Mở session chat&lt;br&gt;• Hiển thị URL / PDF&lt;br&gt;• &lt;b&gt;Luôn đợi task (SSE)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="300" y="90" width="240" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="email-app" parent="1" vertex="1" value="&lt;b&gt;Email / App&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;user inbox&lt;/span&gt;&lt;br&gt;• Nhận notification&lt;br&gt;• Xem kết quả manual" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="1390" y="90" width="200" height="92" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== API GATEWAY ===================== -->
+        <mxCell id="gateway" parent="1" vertex="1" value="&lt;b&gt;API Gateway&lt;/b&gt;  ·  REST + SSE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#1F2937;strokeWidth=1.5;fontSize=12;align=center;verticalAlign=middle;fontColor=#1F2937;">
+          <mxGeometry x="150" y="235" width="1050" height="44" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== SERVICE LAYER ===================== -->
+        <mxCell id="svc-slot" parent="1" vertex="1" value="&lt;b&gt;Slot Filling Service&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;collect slots&lt;/span&gt;&lt;br&gt;• Hỏi device → NSX → model&lt;br&gt;• Gợi ý model cũ từ history&lt;br&gt;• Lưu query_history" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="150" y="346" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="svc-operator" parent="1" vertex="1" value="&lt;b&gt;Operator (Task)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;1 task / key (D,N,M)&lt;/span&gt;&lt;br&gt;• Tạo / tìm task theo (D,N,M)&lt;br&gt;• Dedup: cùng key chờ chung&lt;br&gt;• Chạy pipeline · update status&lt;br&gt;• Xong → gửi Notification / SSE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF9C3;strokeColor=#CA8A04;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#713F12;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="400" y="346" width="210" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="svc-cache" parent="1" vertex="1" value="&lt;b&gt;Cache Lookup Service&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;TTL 60d&lt;/span&gt;&lt;br&gt;• Compose key (D,N,M)&lt;br&gt;• SELECT url_index&lt;br&gt;• TTL check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="660" y="346" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="svc-jit" parent="1" vertex="1" value="&lt;b&gt;JIT Health Check&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;HTTP HEAD / GET&lt;/span&gt;&lt;br&gt;• 200 + size ok?&lt;br&gt;• Update last_jit_at&lt;br&gt;• Probe manual URL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="910" y="346" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="svc-nsx" parent="1" vertex="1" value="&lt;b&gt;NSX Resolver Service&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;vendor lookup&lt;/span&gt;&lt;br&gt;• Lookup nsx_website_master&lt;br&gt;• Nếu chưa có → LLM Web Search&lt;br&gt;• Cập nhật nsx_website_master" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="660" y="510" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="svc-websearch" parent="1" vertex="1" value="&lt;b&gt;LLM Web Search&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;candidate URLs&lt;/span&gt;&lt;br&gt;• Gemini + Web Search&lt;br&gt;• Trả về candidate_urls[]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="910" y="510" width="200" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Crawl Orchestrator (single box, workflow as enriched text) -->
+        <mxCell id="orch" parent="1" vertex="1" value="&lt;b style=&quot;font-size:12px&quot;&gt;Crawl Orchestrator&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;LLM-driven crawl · ≤ 3 hops&lt;/span&gt;&lt;br&gt;&lt;br&gt;1. Crawl Homepage (snapshot)&lt;br&gt;2. Analyze UI → selectors&lt;br&gt;3. Search Product (fast / interactive)&lt;br&gt;4. Match Product (LLM)&lt;br&gt;5. Extract Manual (≤ 3 hops)&lt;br&gt;6. Finalize → ManualResult" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F9FAFB;strokeColor=#1F2937;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=10;spacingTop=8;">
+          <mxGeometry x="1140" y="346" width="230" height="300" as="geometry" />
+        </mxCell>
+
+        <!-- Notification (right column) -->
+        <mxCell id="svc-notif" parent="1" vertex="1" value="&lt;b&gt;Notification&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;SSE · Email · Push&lt;/span&gt;&lt;br&gt;• Push kết quả task&lt;br&gt;• SSE real-time / Email offline&lt;br&gt;• Append chat history" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;">
+          <mxGeometry x="1400" y="346" width="200" height="125" as="geometry" />
+        </mxCell>
+
+        <!-- AI / LLM cluster (right column, below Notification) -->
+        <mxCell id="ai-box" parent="1" vertex="1" value="&lt;b&gt;AI / LLM&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=6;">
+          <mxGeometry x="1400" y="490" width="200" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-model" parent="1" vertex="1" value="LLM&#10;Model" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;">
+          <mxGeometry x="1418" y="525" width="62" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-search" parent="1" vertex="1" value="Web&#10;Search" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;">
+          <mxGeometry x="1500" y="525" width="62" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-extract" parent="1" vertex="1" value="LLM&#10;Extract" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;">
+          <mxGeometry x="1418" y="593" width="62" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-ui" parent="1" vertex="1" value="UI&#10;Analyzer" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;">
+          <mxGeometry x="1500" y="593" width="62" height="62" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== DATA LAYER ===================== -->
+        <mxCell id="db-master" parent="1" vertex="1" value="Master Data DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=8;">
+          <mxGeometry x="150" y="745" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="db-master-f" parent="1" vertex="1" value="• users&lt;br&gt;• user_devices&lt;br&gt;• query_history" style="text;html=1;align=left;verticalAlign=top;fontSize=10;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;">
+          <mxGeometry x="168" y="808" width="170" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="db-tasks" parent="1" vertex="1" value="Tasks DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#CA8A04;strokeWidth=2;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#713F12;spacingTop=8;">
+          <mxGeometry x="410" y="745" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="db-tasks-f" parent="1" vertex="1" value="• tasks (key D,N,M)&lt;br&gt;&amp;nbsp;&amp;nbsp;status: running|done&lt;br&gt;&amp;nbsp;&amp;nbsp;result_url&lt;br&gt;&amp;nbsp;&amp;nbsp;waiters[] (SSE)&lt;br&gt;&amp;nbsp;&amp;nbsp;created_at · done_at" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;">
+          <mxGeometry x="428" y="805" width="180" height="92" as="geometry" />
+        </mxCell>
+
+        <mxCell id="db-url" parent="1" vertex="1" value="URL Index DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=2;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=8;">
+          <mxGeometry x="670" y="745" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="db-url-f" parent="1" vertex="1" value="• url_index (key D,N,M)&lt;br&gt;&amp;nbsp;&amp;nbsp;manual_url · manual_type&lt;br&gt;&amp;nbsp;&amp;nbsp;cached_at · ttl_days=60&lt;br&gt;&amp;nbsp;&amp;nbsp;last_jit_at · jit_status&lt;br&gt;&amp;nbsp;&amp;nbsp;hit_count" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;">
+          <mxGeometry x="688" y="805" width="180" height="92" as="geometry" />
+        </mxCell>
+
+        <mxCell id="db-nsx" parent="1" vertex="1" value="NSX Website Master" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=8;">
+          <mxGeometry x="930" y="745" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="db-nsx-f" parent="1" vertex="1" value="• nsx_website_master&lt;br&gt;&amp;nbsp;&amp;nbsp;nsx_normalized (UQ)&lt;br&gt;&amp;nbsp;&amp;nbsp;website_url&lt;br&gt;&amp;nbsp;&amp;nbsp;status: pending|approved&lt;br&gt;&amp;nbsp;&amp;nbsp;approved_by · approved_at" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;">
+          <mxGeometry x="948" y="805" width="180" height="92" as="geometry" />
+        </mxCell>
+
+        <mxCell id="db-site" parent="1" vertex="1" value="Site Step Cache" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=8;">
+          <mxGeometry x="1190" y="745" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="db-site-f" parent="1" vertex="1" value="• site_step_cache (host)&lt;br&gt;&amp;nbsp;&amp;nbsp;search_input_sel&lt;br&gt;&amp;nbsp;&amp;nbsp;search_button_sel&lt;br&gt;&amp;nbsp;&amp;nbsp;search_trigger_sel&lt;br&gt;&amp;nbsp;&amp;nbsp;action_template&lt;br&gt;&amp;nbsp;&amp;nbsp;success_count" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;">
+          <mxGeometry x="1208" y="805" width="180" height="95" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== EXTERNAL SYSTEMS ===================== -->
+        <mxCell id="ext-s3" parent="1" vertex="1" value="&lt;b&gt;Amazon S3 / CloudWatch&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;traces · logs · benchmark&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;">
+          <mxGeometry x="275" y="978" width="200" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-mfr" parent="1" vertex="1" value="&lt;b&gt;Manufacturer Websites&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;crawl targets&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;">
+          <mxGeometry x="800" y="978" width="200" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-mail" parent="1" vertex="1" value="&lt;b&gt;Email / Push Gateway&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#6B7280&quot;&gt;SES · FCM · SSE&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;">
+          <mxGeometry x="1400" y="978" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== EDGES: CLIENT / GATEWAY ===================== -->
+        <mxCell id="e-chat-gw" parent="1" edge="1" source="chat-ui" target="gateway" value="request / SSE" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;exitX=0.5;exitY=1;entryX=0.2;entryY=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-gw-slot" parent="1" edge="1" source="gateway" target="svc-slot" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;exitX=0.05;exitY=1;entryX=0.5;entryY=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- TASK: create / find -> run -->
+        <mxCell id="e-slot-op" parent="1" edge="1" source="svc-slot" target="svc-operator" value="tạo / tìm task (D,N,M)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#CA8A04;endArrow=classic;fontSize=9;fontColor=#92400E;fontStyle=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-op-tasks" parent="1" edge="1" source="svc-operator" target="db-tasks" value="find / create · dedup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#CA8A04;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#92400E;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-op-cache" parent="1" edge="1" source="svc-operator" target="svc-cache" value="run task" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;fontSize=9;fontColor=#374151;exitX=1;exitY=0.5;entryX=0;entryY=0.5;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- PIPELINE -->
+        <mxCell id="e-cache-jit" parent="1" edge="1" source="svc-cache" target="svc-jit" value="hit + TTL ok" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#059669;endArrow=classic;fontSize=10;fontColor=#059669;fontStyle=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-cache-nsx" parent="1" edge="1" source="svc-cache" target="svc-nsx" value="miss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#DC2626;endArrow=classic;fontSize=10;fontColor=#DC2626;fontStyle=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-nsx-ws" parent="1" edge="1" source="svc-nsx" target="svc-websearch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-ws-orch" parent="1" edge="1" source="svc-websearch" target="orch" value="candidate URLs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;fontSize=10;fontColor=#374151;exitX=1;exitY=0.5;entryX=0;entryY=0.85;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- RESULTS -> NOTIFICATION (task xong) -->
+        <mxCell id="e-jit-notif" parent="1" edge="1" source="svc-jit" target="svc-notif" value="hit result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#059669;endArrow=classic;fontSize=9;fontColor=#059669;fontStyle=1;exitX=0.5;exitY=0;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1010" y="324" /><mxPoint x="1500" y="324" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-orch-notif" parent="1" edge="1" source="orch" target="svc-notif" value="ManualResult" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;fontSize=10;fontColor=#374151;exitX=1;exitY=0.15;entryX=0;entryY=0.4;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- NOTIFY OUT + UI waits -->
+        <mxCell id="e-notif-gw" parent="1" edge="1" source="svc-notif" target="gateway" value="SSE → UI (đợi task)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#059669;dashed=1;endArrow=classic;fontSize=9;fontColor=#059669;fontStyle=1;exitX=0.3;exitY=0;entryX=0.9;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1460" y="312" /><mxPoint x="1095" y="312" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-notif-app" parent="1" edge="1" source="svc-notif" target="email-app" value="in-app" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;exitX=0.7;exitY=0;entryX=0.7;entryY=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-notif-mail" parent="1" edge="1" source="svc-notif" target="ext-mail" value="email / push" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;exitX=1;exitY=0.5;entryX=1;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1620" y="408" /><mxPoint x="1620" y="1002" /></Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- AI / LLM links -->
+        <mxCell id="e-ws-ai" parent="1" edge="1" source="svc-websearch" target="ai-box" value="Web Search" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#6B7280;exitX=0.5;exitY=1;entryX=0.5;entryY=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1010" y="675" /><mxPoint x="1500" y="675" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-orch-ai" parent="1" edge="1" source="orch" target="ai-box" value="UI analyze + extract" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#6B7280;exitX=1;exitY=0.9;entryX=0;entryY=0.3;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- ===================== EDGES: SERVICE -> DATA ===================== -->
+        <mxCell id="e-slot-db" parent="1" edge="1" source="svc-slot" target="db-master" value="R/W" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#1F2937;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;exitX=0.3;exitY=1;entryX=0.4;entryY=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-cache-db" parent="1" edge="1" source="svc-cache" target="db-url" value="SELECT" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#1F2937;endArrow=classic;fontSize=9;fontColor=#374151;exitX=0.3;exitY=1;entryX=0.4;entryY=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-jit-db" parent="1" edge="1" source="svc-jit" target="db-url" value="update last_jit_at" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;exitX=0.1;exitY=1;entryX=0.85;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="930" y="710" /><mxPoint x="840" y="710" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-nsx-db" parent="1" edge="1" source="svc-nsx" target="db-nsx" value="lookup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#1F2937;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;exitX=0.7;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="800" y="730" /><mxPoint x="1030" y="730" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-orch-site" parent="1" edge="1" source="orch" target="db-site" value="R/W selectors" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#1F2937;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;exitX=0.35;exitY=1;entryX=0.5;entryY=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e-orch-url" parent="1" edge="1" source="orch" target="db-url" value="UPSERT (self-healing)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;exitX=0.05;exitY=1;entryX=0.6;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1151" y="700" /><mxPoint x="790" y="700" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-op-tasks2" parent="1" edge="1" source="svc-operator" target="db-tasks" value="status = done" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;exitX=0.7;exitY=1;entryX=0.8;entryY=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- ===================== EDGES: -> EXTERNAL ===================== -->
+        <mxCell id="e-orch-mfr" parent="1" edge="1" source="orch" target="ext-mfr" value="HTTP crawl" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;endArrow=classic;fontSize=9;fontColor=#6B7280;exitX=0;exitY=0.95;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="900" y="700" /><mxPoint x="900" y="960" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-orch-s3" parent="1" edge="1" source="orch" target="ext-s3" value="traces / logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;exitX=0.02;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1145" y="712" /><mxPoint x="375" y="712" /></Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

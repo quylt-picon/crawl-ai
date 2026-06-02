@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.health_check_routes import router as health_check_router
 from app.api.routes import router as crawl_router
 from app.core.config import get_settings
 from app.core.logging import get_logger, setup_logging
@@ -36,6 +37,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
     app.include_router(crawl_router)
+    app.include_router(health_check_router)
     return app
 
 

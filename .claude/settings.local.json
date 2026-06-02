@@ -7,7 +7,12 @@
       "Bash(npx -y tsc@5.4 --noEmit)",
       "Bash(./node_modules/.bin/tsc --noEmit)",
       "Bash(./node_modules/.bin/tsc --version)",
-      "Bash(./node_modules/.bin/tsc --noEmit --ignoreDeprecations \"5.0\")"
+      "Bash(./node_modules/.bin/tsc --noEmit --ignoreDeprecations \"5.0\")",
+      "Bash(find /Users/quylt/Desktop -maxdepth 3 -name \"image*.png\" -o -name \"image*.jpg\" 2>/dev/null | head -20)",
+      "Read(//Users/quylt/Desktop/**)",
+      "Bash(find /Users/quylt -maxdepth 4 -iname \"*image*1*.png\" 2>/dev/null | head -10; find /Users/quylt/Downloads -maxdepth 2 -iname \"*.png\" 2>/dev/null | head -10)",
+      "Read(//Users/quylt/**)",
+      "Read(//Users/quylt/Downloads/**)"
     ]
   }
 }
