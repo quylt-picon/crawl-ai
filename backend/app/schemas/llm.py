@@ -47,3 +47,19 @@ class ManualExtraction(BaseModel):
     manuals: List[ManualEntry] = Field(default_factory=list)
     follow_url: Optional[str] = None
     reason: Optional[str] = None
+
+
+class WebSearchManuals(BaseModel):
+    """Output of the LLM *web-search* manual finder.
+
+    Mirrors :class:`ManualExtraction` but is produced by a single
+    web-search-grounded LLM call instead of by crawling pages. ``manuals``
+    holds every document/guide the model surfaced from the live web; reuse the
+    shared :class:`ManualEntry` shape so the same frontend can render results
+    from either pipeline.
+    """
+
+    found: bool = False
+    manuals: List[ManualEntry] = Field(default_factory=list)
+    summary: Optional[str] = None
+    reason: Optional[str] = None

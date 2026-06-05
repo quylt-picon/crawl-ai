@@ -12,14 +12,18 @@ interface Preset {
 interface Props {
   onSubmit: (input: SearchInput) => void;
   disabled?: boolean;
+  /** When true, show a "search without a specific site" toggle that makes the
+   * website URL optional (web-search tab); the crawl tab always needs a site. */
+  allowNoSite?: boolean;
 }
 
-export function SearchForm({ onSubmit, disabled }: Props) {
+export function SearchForm({ onSubmit, disabled, allowNoSite }: Props) {
   const [websiteUrl, setWebsiteUrl] = useState(
     ""
   );
   const [productName, setProductName] = useState("");
   const [productCode, setProductCode] = useState("");
+  const [noSite, setNoSite] = useState(false);
   const [presets, setPresets] = useState<Preset[]>([]);
   const [selectedPreset, setSelectedPreset] = useState<string>("");
 
@@ -41,11 +45,15 @@ export function SearchForm({ onSubmit, disabled }: Props) {
     setProductCode(preset.product_code);
   };
 
+  const siteless = allowNoSite && noSite;
+
   const submit = (e: FormEvent) => {
     e.preventDefault();
     if (disabled) return;
     onSubmit({
-      website_url: websiteUrl.trim(),
+      // Omit the URL entirely when searching site-less so the backend treats it
+      // as "no preferred site" rather than validating an empty string.
+      website_url: siteless ? undefined : websiteUrl.trim(),
       product_name: productName.trim(),
       product_code: productCode.trim(),
     });
@@ -76,14 +84,29 @@ export function SearchForm({ onSubmit, disabled }: Props) {
           </div>
         )}
         <div className="md:col-span-3">
-          <label className="label" htmlFor="website_url">Website URL</label>
+          <div className="flex items-center justify-between">
+            <label className="label" htmlFor="website_url">Website URL</label>
+            {allowNoSite && (
+              <label className="flex cursor-pointer items-center gap-1.5 text-xs font-medium text-slate-500">
+                <input
+                  type="checkbox"
+                  className="h-3.5 w-3.5 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                  checked={noSite}
+                  disabled={disabled}
+                  onChange={(e) => setNoSite(e.target.checked)}
+                />
+                Không chỉ định site — tự tìm kiếm
+              </label>
+            )}
+          </div>
           <input
             id="website_url"
             className="input"
-            value={websiteUrl}
+            value={siteless ? "" : websiteUrl}
             onChange={(e) => setWebsiteUrl(e.target.value)}
-            placeholder="https://www.example.com"
-            required
+            placeholder={siteless ? "Tự tìm trên web (không cần website)" : "https://www.example.com"}
+            required={!siteless}
+            disabled={disabled || siteless}
           />
         </div>
         <div className="md:col-span-2">

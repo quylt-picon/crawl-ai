@@ -11,6 +11,10 @@ class StepId(str, Enum):
     FILTER_RESULTS = "filter_results"
     FIND_MANUAL = "find_manual"
     FINALIZE = "finalize"
+    # Web-search pipeline (LLM grounded on live web search) — an alternative
+    # to the crawl pipeline that shares the FINALIZE step.
+    WEB_SEARCH = "web_search"
+    REVIEW_RESULTS = "review_results"
 
 
 class StepStatus(str, Enum):
@@ -28,4 +32,6 @@ STEP_LABELS: dict[StepId, str] = {
     StepId.FILTER_RESULTS: "Filtering search results",
     StepId.FIND_MANUAL: "Extracting manual",
     StepId.FINALIZE: "Finalizing result",
+    StepId.WEB_SEARCH: "Searching the web with LLM",
+    StepId.REVIEW_RESULTS: "Reviewing found documents",
 }

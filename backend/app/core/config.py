@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     gemini_api_token: str = Field(..., alias="GEMINI_API_TOKEN")
     gemini_model: str = Field("gemini-2.5-flash", alias="GEMINI_MODEL")
 
+    # Optional — enables the SerpAPI-backed web-search mode. Empty = disabled.
+    serpapi_api_key: str = Field("", alias="SERPAPI_API_KEY")
+
     app_host: str = Field("0.0.0.0", alias="APP_HOST")
     app_port: int = Field(8080, alias="APP_PORT")
 

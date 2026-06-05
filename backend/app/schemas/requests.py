@@ -1,6 +1,8 @@
 """Request DTOs."""
 from __future__ import annotations
 
+from typing import Optional
+
 from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 
@@ -13,3 +15,31 @@ class CrawlSearchRequest(BaseModel):
     @classmethod
     def _strip(cls, v: str) -> str:
         return v.strip()
+
+
+class WebSearchRequest(CrawlSearchRequest):
+    """Same as the crawl search request, plus an optional model override.
+
+    ``model`` is the Gemini model id (e.g. ``gemini-2.5-flash``) chosen in the
+    UI dropdown; when omitted the service falls back to its configured default.
+    """
+
+    # Unlike the crawl pipeline (which needs a site to crawl), web search can
+    # run with no preferred website at all — just the product name + code, and
+    # let the search itself discover authoritative sources. ``None``/omitted =
+    # open-web search with no site preference.
+    website_url: Optional[HttpUrl] = Field(
+        None,
+        description="Manufacturer / preferred website (optional — omit to search the open web)",
+    )
+
+    model: Optional[str] = Field(None, max_length=120)
+    # When true, search via SerpAPI then have the LLM filter/extract the manual
+    # links; when false, use the Gemini grounded web search.
+    use_serpapi: bool = Field(False)
+
+    @field_validator("model")
+    @classmethod
+    def _strip_model(cls, v: Optional[str]) -> Optional[str]:
+        v = (v or "").strip()
+        return v or None

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Activity, FileText, Sparkles } from "lucide-react";
+import { Activity, FileText, Globe, Sparkles } from "lucide-react";
 import { SearchForm } from "@/components/SearchForm";
 import { Stepper } from "@/components/Stepper";
 import { Timeline } from "@/components/Timeline";
@@ -8,8 +8,9 @@ import { WorkflowDiagramModal } from "@/components/WorkflowDiagramModal";
 import { useCrawlJob } from "@/hooks/useCrawlJob";
 import { useWorkflow } from "@/store/workflow";
 import UrlHealthCheck from "@/pages/UrlHealthCheck";
+import WebSearchFinder from "@/pages/WebSearchFinder";
 
-type Tab = "finder" | "health";
+type Tab = "finder" | "websearch" | "health";
 
 export default function App() {
   const { submit } = useCrawlJob();
@@ -30,7 +31,7 @@ export default function App() {
             Crawl AI Toolkit
           </h1>
           <p className="text-sm text-slate-500">
-            Product Manual Finder · URL Health Check
+            Product Manual Finder · Web Search Finder · URL Health Check
           </p>
         </div>
         <div className="ml-auto flex flex-wrap items-center gap-2">
@@ -67,6 +68,17 @@ export default function App() {
         </button>
         <button
           className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+            tab === "websearch"
+              ? "bg-white text-slate-900 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+          onClick={() => setTab("websearch")}
+        >
+          <Globe className="h-4 w-4" />
+          Web Search Finder
+        </button>
+        <button
+          className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all ${
             tab === "health"
               ? "bg-white text-slate-900 shadow-sm"
               : "text-slate-500 hover:text-slate-700"
@@ -88,6 +100,8 @@ export default function App() {
             <Timeline />
           </section>
         </>
+      ) : tab === "websearch" ? (
+        <WebSearchFinder />
       ) : (
         <UrlHealthCheck />
       )}
