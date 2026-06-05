@@ -1,0 +1,222 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Revised" id="revised-arch-001">
+    <mxGraphModel grid="0" page="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2000" pageHeight="1250" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#111827;strokeColor=none;fillColor=none;" value="System Architecture Diagram — Revised (per customer Q&amp;A answers)" vertex="1">
+          <mxGeometry height="34" width="1780" x="120" y="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lane_client" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;" vertex="1">
+          <mxGeometry height="150" width="1780" x="120" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_service" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;" vertex="1">
+          <mxGeometry height="480" width="1780" x="120" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_data" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;" vertex="1">
+          <mxGeometry height="250" width="1780" x="120" y="740" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lbl_client" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;" value="CLIENT LAYER" vertex="1">
+          <mxGeometry height="20" width="100" x="35" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_service" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;" value="SERVICE LAYER" vertex="1">
+          <mxGeometry height="20" width="100" x="35" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_data" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;" value="DATA LAYER" vertex="1">
+          <mxGeometry height="20" width="100" x="35" y="855" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;1 · Chat UI / My Page&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;React · SSE&lt;/span&gt;&lt;br&gt;• Open chat, wait result via SSE (5–7 min)&lt;br&gt;• Suggest saved products → skip locate (Q3)&lt;br&gt;• Confirm result: [Đúng] / [Sai, tìm lại] (Q1)&lt;br&gt;• Report broken link · リンク切れ報告 (Q6)" vertex="1">
+          <mxGeometry height="120" width="410" x="150" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c_removed" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;strokeWidth=1;dashed=1;fontSize=9;align=left;verticalAlign=top;fontColor=#6B7280;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;&lt;i&gt;Removed (per answers)&lt;/i&gt;&lt;/b&gt;&lt;br&gt;• Email / App inbox&lt;br&gt;• Push / Email notifications (Q2)" vertex="1">
+          <mxGeometry height="70" width="250" x="620" y="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="gw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#1F2937;strokeWidth=1.5;fontSize=12;align=center;verticalAlign=middle;fontColor=#1F2937;" value="&lt;b&gt;API Gateway&lt;/b&gt;  ·  REST + SSE" vertex="1">
+          <mxGeometry height="34" width="1400" x="150" y="255" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;2 · Slot Filling Service&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;collect slots&lt;/span&gt;&lt;br&gt;• device → manufacturer → model&lt;br&gt;• Check user_owned_products&lt;br&gt;• Suggest saved → skip locate (Q3)&lt;br&gt;• Save query_history" vertex="1">
+          <mxGeometry height="160" width="250" x="150" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF9C3;strokeColor=#CA8A04;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#713F12;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;3 · Search Orchestrator&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#92400E'&gt;independent search module (Q7)&lt;/span&gt;&lt;br&gt;• Run pipeline, stream via SSE&lt;br&gt;• Found → ask user to confirm (Q1)&lt;br&gt;• Not found → reply on chat, end&lt;br&gt;&amp;nbsp;&amp;nbsp;(no task, no notify) (Q2)&lt;br&gt;• Permission check optional/later (Q7)&lt;br&gt;• No rate-limit / proxy / queue (Q8)" vertex="1">
+          <mxGeometry height="185" width="255" x="430" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;4 · Cache Lookup&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;no TTL (Q4/Q5)&lt;/span&gt;&lt;br&gt;• Compose key (D,M,M normalized)&lt;br&gt;• SELECT url_index&lt;br&gt;• Hit → JIT check" vertex="1">
+          <mxGeometry height="160" width="230" x="715" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;5 · JIT Health Check&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;HTTP GET&lt;/span&gt;&lt;br&gt;• 200 OK only — no Soft-404 check (Q6)&lt;br&gt;• Alive → return link&lt;br&gt;• Dead (404/err) → re-search (Q4)&lt;br&gt;• Update last_jit_at · hit_count" vertex="1">
+          <mxGeometry height="160" width="255" x="975" y="305" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F9FAFB;strokeColor=#1F2937;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=10;spacingTop=8;" value="&lt;b style='font-size:12px'&gt;7 · Crawl Orchestrator&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;LLM-driven crawl · ≤ 3 hops&lt;/span&gt;&lt;br&gt;&lt;br&gt;1. Crawl homepage (snapshot)&lt;br&gt;2. Analyze UI → selectors&lt;br&gt;3. Search product&lt;br&gt;4. Match product (LLM)&lt;br&gt;5. Extract manual (≤ 3 hops)&lt;br&gt;6. Finalize → ManualResult" vertex="1">
+          <mxGeometry height="375" width="290" x="1260" y="305" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ai_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=6;" value="&lt;b&gt;AI / LLM&lt;/b&gt;" vertex="1">
+          <mxGeometry height="215" width="300" x="1580" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="ai_llm" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;" value="LLM&#xa;Model" vertex="1">
+          <mxGeometry height="58" width="125" x="1605" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="ai_web" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;" value="Web&#xa;Search" vertex="1">
+          <mxGeometry height="58" width="125" x="1745" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="ai_extract" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;" value="LLM&#xa;Extract" vertex="1">
+          <mxGeometry height="58" width="125" x="1605" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="ai_ui" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;" value="UI&#xa;Analyzer" vertex="1">
+          <mxGeometry height="58" width="125" x="1745" y="425" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;6 · Manufacturer Resolver&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;vendor lookup&lt;/span&gt;&lt;br&gt;• Lookup website_master&lt;br&gt;• Miss → LLM Web Search&lt;br&gt;• Save website_master (auto, Q1)" vertex="1">
+          <mxGeometry height="150" width="230" x="715" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="s51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;6.1 · LLM Web Search&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;candidate URLs&lt;/span&gt;&lt;br&gt;• LLM + Web Search → candidate_urls[]" vertex="1">
+          <mxGeometry height="110" width="255" x="975" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="s7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#059669;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#065F46;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;8 · Result Confirmation&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#047857'&gt;in-chat · user-confirmed (Q1)&lt;/span&gt;&lt;br&gt;• Show link + buttons&lt;br&gt;• YES → save url_index (master)&lt;br&gt;• NO → re-search (ask version / year)" vertex="1">
+          <mxGeometry height="150" width="255" x="430" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="s8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#7F1D1D;spacingLeft=8;spacingTop=6;" value="&lt;b&gt;9 · Broken-link Report&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#B91C1C'&gt;user feedback (Q6)&lt;/span&gt;&lt;br&gt;• Log report&lt;br&gt;• Notify operator → manual fix" vertex="1">
+          <mxGeometry height="150" width="250" x="150" y="505" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d1" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=8;" value="User Data DB" vertex="1">
+          <mxGeometry height="145" width="220" x="150" y="775" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_txt" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;" value="• user_owned_products&lt;br&gt;&amp;nbsp;&amp;nbsp;(ユーザー所有製品)&lt;br&gt;• query_history" vertex="1">
+          <mxGeometry height="70" width="190" x="165" y="838" as="geometry" />
+        </mxCell>
+
+        <mxCell id="warranty" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#9CA3AF;strokeWidth=1.5;dashed=1;fontSize=10;align=center;verticalAlign=middle;fontColor=#6B7280;" value="&lt;b&gt;Warranty Master&lt;/b&gt;&lt;br&gt;保証情報&lt;br&gt;&lt;span style='font-size:9px'&gt;NOT modified · read-only (Q3)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="110" width="230" x="410" y="792" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d2" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=2;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=8;" value="URL Index DB" vertex="1">
+          <mxGeometry height="145" width="230" x="715" y="775" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_txt" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;" value="• url_index (key D,M,M)&lt;br&gt;&amp;nbsp;&amp;nbsp;manual_url · manual_type&lt;br&gt;&amp;nbsp;&amp;nbsp;cached_at · last_jit_at · jit_status&lt;br&gt;&amp;nbsp;&amp;nbsp;hit_count · broken_reported&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;i&gt;(no TTL)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="215" x="725" y="835" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d3" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=8;" value="Manufacturer Website Master" vertex="1">
+          <mxGeometry height="145" width="240" x="975" y="775" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_txt" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;" value="• manufacturer_normalized (UQ)&lt;br&gt;• website_url&lt;br&gt;• source (llm / manual)&lt;br&gt;• updated_at&lt;br&gt;&lt;i&gt;(no operator-approval table)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="225" x="985" y="838" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d4" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=8;" value="Site Step Cache" vertex="1">
+          <mxGeometry height="145" width="240" x="1260" y="775" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_txt" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#374151;strokeColor=none;fillColor=none;spacingLeft=4;" value="• site_step_cache (host)&lt;br&gt;&amp;nbsp;&amp;nbsp;search_input_sel&lt;br&gt;&amp;nbsp;&amp;nbsp;search_button_sel&lt;br&gt;&amp;nbsp;&amp;nbsp;action_template" vertex="1">
+          <mxGeometry height="80" width="225" x="1270" y="838" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ext_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;" vertex="1">
+          <mxGeometry height="235" width="300" x="1580" y="745" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;" value="EXTERNAL SYSTEMS" vertex="1">
+          <mxGeometry height="20" width="260" x="1600" y="752" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_web" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;" value="&lt;b&gt;Manufacturer Websites&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;crawl targets&lt;/span&gt;" vertex="1">
+          <mxGeometry height="44" width="260" x="1600" y="782" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_obs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;" value="&lt;b&gt;Amazon S3 / CloudWatch&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;traces · logs&lt;/span&gt;" vertex="1">
+          <mxGeometry height="44" width="260" x="1600" y="838" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_op" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DC2626;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#7F1D1D;" value="&lt;b&gt;Operator Console&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#B91C1C'&gt;broken-link reports → manual link update (Q6)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="70" width="260" x="1600" y="894" as="geometry" />
+        </mxCell>
+
+        <mxCell id="notes_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.2;fontSize=10;align=left;verticalAlign=top;fontColor=#374151;spacingLeft=12;spacingTop=10;" value="&lt;b&gt;Δ Applied from customer answers  (Suggestion → Final)&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Removed:&lt;/b&gt;  Email/Push notifications &amp;amp; gateway (Q2)  ·  Tasks / Waiters dedup queue (Q2,Q8)  ·  Operator-confirm pending table (Q1)  ·  URL TTL / periodic refresh / auto-crawler (Q4,Q5)  ·  Soft-404 content validation (Q6)  ·  Rate-limit / proxy / IP-rotation (Q8)&lt;br&gt;&lt;br&gt;&lt;b&gt;Added / Changed:&lt;/b&gt;  In-chat &lt;b&gt;user&lt;/b&gt; confirmation via buttons → save on YES (Q1)  ·  Reuse user_owned_products to skip locate (Q3)  ·  Warranty master kept untouched (Q3)  ·  200-OK-only JIT, dead → re-search (Q4,Q6)  ·  Broken-link report → operator manual fix (Q6)  ·  Open search, permission as future module (Q7)" vertex="1">
+          <mxGeometry height="150" width="1780" x="120" y="1010" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" parent="1" source="c1" target="gw" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;" value="request / SSE">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" parent="1" source="gw" target="s1" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" parent="1" source="s1" target="d1" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#000066;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;" value="R/W owned products">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" parent="1" source="s1" target="s2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#CA8A04;endArrow=classic;fontSize=9;fontColor=#92400E;fontStyle=1;" value="start search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" parent="1" source="s2" target="s3" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;fontSize=9;fontColor=#374151;" value="lookup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" parent="1" source="s3" target="d2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#000066;endArrow=classic;fontSize=9;fontColor=#374151;" value="SELECT">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" parent="1" source="s3" target="s4" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#059669;endArrow=classic;fontSize=9;fontColor=#059669;fontStyle=1;" value="hit → JIT">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" parent="1" source="s4" target="d2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#A50040;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;" value="update jit / hit_count">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" parent="1" source="s4" target="s2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;" value="alive → return / dead → re-search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" parent="1" source="s2" target="s5" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#DC2626;endArrow=classic;fontSize=9;fontColor=#DC2626;fontStyle=1;" value="miss → resolve">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" parent="1" source="s5" target="d3" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#000066;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;" value="lookup / save">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" parent="1" source="s5" target="s51" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;fontSize=9;fontColor=#374151;" value="miss">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" parent="1" source="s51" target="ai_web" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#d6b656;dashed=1;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#6B7280;" value="LLM + Web Search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" parent="1" source="s5" target="s6" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;fontSize=9;fontColor=#374151;" value="website_url → crawl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" parent="1" source="s6" target="ext_web" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;endArrow=classic;fontSize=9;fontColor=#6B7280;" value="HTTP crawl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" parent="1" source="s6" target="d4" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#1F2937;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;" value="R/W selectors">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" parent="1" source="s6" target="ai_ui" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#d6b656;dashed=1;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#6B7280;" value="UI analyze + extract">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" parent="1" source="s6" target="s2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#1F2937;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#374151;" value="ManualResult / not found">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" parent="1" source="s2" target="s7" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#059669;endArrow=classic;fontSize=9;fontColor=#059669;fontStyle=1;" value="found → confirm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" parent="1" source="s7" target="c1" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#059669;dashed=1;endArrow=classic;startArrow=classic;fontSize=9;fontColor=#059669;" value="show buttons (SSE)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" parent="1" source="s7" target="d2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.5;strokeColor=#059669;endArrow=classic;fontSize=9;fontColor=#059669;fontStyle=1;" value="YES → save url_index">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" parent="1" source="s7" target="s2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#DC2626;dashed=1;endArrow=classic;fontSize=9;fontColor=#DC2626;" value="NO → re-search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e23" parent="1" source="c1" target="s8" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#DC2626;dashed=1;endArrow=classic;fontSize=9;fontColor=#DC2626;" value="report broken link">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e24" parent="1" source="s8" target="ext_op" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#DC2626;dashed=1;endArrow=classic;fontSize=9;fontColor=#DC2626;" value="notify operator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e25" parent="1" source="ext_op" target="d2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#9CA3AF;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;" value="manual link update">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e26" parent="1" source="s6" target="ext_obs" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1.2;strokeColor=#006EAF;dashed=1;endArrow=classic;fontSize=9;fontColor=#6B7280;" value="traces / logs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

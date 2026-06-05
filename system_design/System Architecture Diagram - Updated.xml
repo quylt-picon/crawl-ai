@@ -1,0 +1,187 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Updated-Architecture" id="updated_arch_v2">
+    <mxGraphModel grid="0" page="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Kiến trúc hệ thống (Cập nhật theo Q&amp;amp;A) &amp;#8212; Tra cứu tài liệu hướng dẫn" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#111827;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1380" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="&lt;b&gt;Chú thích:&lt;/b&gt; &lt;span style='color:#059669'&gt;&amp;#9608; Mới&lt;/span&gt; &amp;#160; &lt;span style='color:#2563EB'&gt;&amp;#9608; Thay đổi&lt;/span&gt; &amp;#160; &lt;span style='color:#1F2937'&gt;&amp;#9608; Giữ nguyên&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#94A3B8;strokeWidth=1;fontSize=9;align=left;verticalAlign=middle;fontColor=#334155;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="20" width="300" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="band_client" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="75" width="1290" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="band_service" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="220" width="1290" height="385" as="geometry" />
+        </mxCell>
+        <mxCell id="band_ext" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="75" width="310" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="band_data" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="615" width="1620" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_client" value="CLIENT LAYER" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="30" y="130" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_service" value="SERVICE LAYER" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="30" y="400" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_data" value="DATA LAYER" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="30" y="710" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lab_ext" value="EXTERNAL / AI" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#64748B;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="82" width="310" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="chat_ui" value="&lt;b&gt;Chat UI / My Page&lt;/b&gt; &lt;span style='color:#2563EB;font-size:8px'&gt;[THAY ĐỔI]&lt;/span&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;React &amp;#183; SSE (chờ đồng bộ trong chat)&lt;/span&gt;&lt;br&gt;&amp;#8226; Gợi ý &lt;b&gt;sản phẩm đã lưu&lt;/b&gt; &amp;#8594; bỏ qua định vị (Q3)&lt;br&gt;&amp;#8226; Xác nhận link bằng nút &lt;b&gt;[Đúng]/[Sai]&lt;/b&gt; (Q1)&lt;br&gt;&amp;#8226; Nút &lt;b&gt;&quot;Báo lỗi link&quot;&lt;/b&gt; (Q6)&lt;br&gt;&amp;#8226; Thấy &amp;#8594; hiện link/PDF; Không thấy &amp;#8594; &quot;Không tìm thấy&quot; (Q2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="150" y="90" width="380" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="gateway" value="&lt;b&gt;API Gateway&lt;/b&gt; &amp;#183; REST + SSE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#1F2937;strokeWidth=1.5;fontSize=12;align=center;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="150" y="240" width="880" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="slot" value="&lt;b&gt;1 - Slot Filling Service&lt;/b&gt; &lt;span style='color:#2563EB;font-size:8px'&gt;[THAY ĐỔI]&lt;/span&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;thu thập slot&lt;/span&gt;&lt;br&gt;&amp;#8226; Hỏi Thiết bị &amp;#8594; NSX &amp;#8594; Model&lt;br&gt;&amp;#8226; &lt;b&gt;Gợi ý SP đã lưu của user&lt;/b&gt; &amp;#8594; bỏ qua định vị (Q3)&lt;br&gt;&amp;#8226; Lưu user_owned_products + query_history" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="150" y="300" width="215" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="operator" value="&lt;b&gt;6 - Operator Console&lt;/b&gt; &lt;span style='color:#059669;font-size:8px'&gt;[MỚI]&lt;/span&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;xử lý báo lỗi link (Q6)&lt;/span&gt;&lt;br&gt;&amp;#8226; Nhận &quot;Báo lỗi link&quot; từ user&lt;br&gt;&amp;#8226; Ghi log vào link_reports&lt;br&gt;&amp;#8226; Người vận hành &lt;b&gt;cập nhật link thủ công&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#059669;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#064E3B;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="150" y="450" width="215" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="search" value="&lt;b&gt;2 - Search Orchestrator (Task)&lt;/b&gt; &lt;span style='color:#2563EB;font-size:8px'&gt;[THAY ĐỔI]&lt;/span&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;đồng bộ qua SSE &amp;#183; 1 task / key (D,M,M)&lt;/span&gt;&lt;br&gt;&amp;#8226; &lt;b&gt;Module tìm kiếm độc lập&lt;/b&gt; (hook phân quyền - tương lai, Q7)&lt;br&gt;&amp;#8226; &lt;b&gt;Tìm kiếm mở&lt;/b&gt;, không lọc lịch sử mua (Q7)&lt;br&gt;&amp;#8226; &lt;b&gt;Tạo/tìm task theo (D,M,M)&lt;/b&gt;&lt;br&gt;&amp;#8226; &lt;b&gt;DEDUP:&lt;/b&gt; nhiều user cùng tìm 1 SP &amp;#8594; chung 1 task,&lt;br&gt;&amp;#160;&amp;#160;user sau thành &lt;b&gt;waiter&lt;/b&gt; &amp;#8594; cùng chờ 1 task&lt;br&gt;&amp;#8226; Done &amp;#8594; trả kết quả qua &lt;b&gt;SSE cho mọi waiter&lt;/b&gt;&lt;br&gt;&amp;#160;&amp;#160;(&lt;s&gt;không email/push/async notify&lt;/s&gt;, Q2)&lt;br&gt;&amp;#8226; Không thấy &amp;#8594; &quot;Không tìm thấy&quot;, kết thúc (Q2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF9C3;strokeColor=#CA8A04;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#713F12;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="395" y="300" width="235" height="215" as="geometry" />
+        </mxCell>
+        <mxCell id="cache" value="&lt;b&gt;3 - Cache Lookup Service&lt;/b&gt; &lt;span style='color:#2563EB;font-size:8px'&gt;[THAY ĐỔI]&lt;/span&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;&lt;b&gt;KHÔNG TTL&lt;/b&gt; (Q4)&lt;/span&gt;&lt;br&gt;&amp;#8226; Tạo key (D,M,M chuẩn hoá)&lt;br&gt;&amp;#8226; SELECT url_index&lt;br&gt;&amp;#8226; &lt;b&gt;JIT health check: chỉ 200 OK&lt;/b&gt; (Q4,Q6)&lt;br&gt;&amp;#8226; Chết (404/lỗi) &amp;#8594; re-search; &lt;s&gt;Soft 404 check&lt;/s&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="655" y="300" width="215" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="resolver" value="&lt;b&gt;4 - Manufacturer Resolver&lt;/b&gt; &lt;span style='color:#2563EB;font-size:8px'&gt;[THAY ĐỔI]&lt;/span&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;vendor lookup&lt;/span&gt;&lt;br&gt;&amp;#8226; Tra manufacturer_website_master&lt;br&gt;&amp;#8226; Nếu thiếu &amp;#8594; LLM Web Search&lt;br&gt;&amp;#8226; Lưu master khi &lt;b&gt;user xác nhận Đúng&lt;/b&gt;&lt;br&gt;&amp;#160;&amp;#160;(&lt;s&gt;không cần operator duyệt&lt;/s&gt;, Q1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=2;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="900" y="300" width="215" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="llm_ws" value="&lt;b&gt;4.1 - LLM Web Search&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;candidate URLs&lt;/span&gt;&lt;br&gt;&amp;#8226; LLM + Web Search &amp;#8594; candidate_urls[]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="905" y="460" width="205" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="crawl" value="&lt;b style='font-size:12px'&gt;5 - Crawl Orchestrator&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;LLM-driven crawl &amp;#183; &amp;#8804; 3 hops&lt;/span&gt;&lt;br&gt;&lt;br&gt;1. Crawl Homepage (snapshot)&lt;br&gt;2. Analyze UI &amp;#8594; selectors&lt;br&gt;3. Search Product&lt;br&gt;4. Match Product (LLM)&lt;br&gt;5. Extract Manual (&amp;#8804; 3 hops)&lt;br&gt;6. Finalize &amp;#8594; ManualResult&lt;br&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;Không cần proxy / IP rotation /&lt;br&gt;rate-limit / queue (Q8)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#1F2937;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="300" width="245" height="285" as="geometry" />
+        </mxCell>
+        <mxCell id="ai_box" value="&lt;b&gt;AI / LLM&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#1F2937;strokeWidth=1.5;fontSize=11;align=center;verticalAlign=top;fontColor=#1F2937;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="110" width="270" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="ai1" value="LLM&amp;#10;Model" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=9;align=center;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="145" width="110" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ai2" value="Web&amp;#10;Search" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=9;align=center;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1585" y="145" width="110" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ai3" value="LLM&amp;#10;Extract" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=9;align=center;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="220" width="110" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ai4" value="UI&amp;#10;Analyzer" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=9;align=center;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1585" y="220" width="110" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="sites" value="&lt;b&gt;Manufacturer Websites&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;crawl targets &amp;#183; JIT 200 OK&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="330" width="270" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="storage" value="&lt;b&gt;S3 / CloudWatch&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#6B7280'&gt;traces &amp;#183; logs &amp;#183; benchmark&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.2;fontSize=10;align=center;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="405" width="270" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="db_user" value="&lt;b&gt;User Data DB&lt;/b&gt; &lt;span style='color:#2563EB;font-size:8px'&gt;[THAY ĐỔI]&lt;/span&gt;&lt;br&gt;&lt;br&gt;&amp;#8226; &lt;b&gt;user_owned_products&lt;/b&gt; (Q3)&lt;br&gt;&amp;#160;&amp;#160;NSX + model / theo user&lt;br&gt;&amp;#160;&amp;#160;&lt;i&gt;tách bảng bảo hành&lt;/i&gt;&lt;br&gt;&amp;#8226; query_history" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=2;fontSize=9;align=left;verticalAlign=top;fontColor=#1F2937;spacingTop=6;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="140" y="635" width="205" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="db_tasks" value="&lt;b&gt;Tasks DB&lt;/b&gt; &lt;span style='color:#92400E;font-size:8px'&gt;[GIỮ - DEDUP]&lt;/span&gt;&lt;br&gt;&lt;br&gt;&amp;#8226; tasks (key D,M,M)&lt;br&gt;&amp;#8226; status: running | done&lt;br&gt;&amp;#8226; result_url&lt;br&gt;&amp;#8226; created_at &amp;#183; done_at" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#CA8A04;strokeWidth=2;fontSize=9;align=left;verticalAlign=top;fontColor=#713F12;spacingTop=6;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="360" y="635" width="205" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="db_waiters" value="&lt;b&gt;Waiters&lt;/b&gt; &lt;span style='color:#92400E;font-size:8px'&gt;[GIỮ]&lt;/span&gt;&lt;br&gt;&lt;br&gt;&amp;#8226; waiters&lt;br&gt;&amp;#8226; chat_session_id&lt;br&gt;&amp;#8226; task_id&lt;br&gt;&lt;i style='font-size:8px'&gt;nhiều user đợi chung 1 task&lt;br&gt;(cùng tìm 1 SP cùng lúc)&lt;/i&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#CA8A04;strokeWidth=2;fontSize=9;align=left;verticalAlign=top;fontColor=#713F12;spacingTop=6;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="580" y="635" width="205" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="db_master" value="&lt;b&gt;Manufacturer Website Master&lt;/b&gt; &lt;span style='color:#2563EB;font-size:8px'&gt;[THAY ĐỔI]&lt;/span&gt;&lt;br&gt;&lt;br&gt;&amp;#8226; manufacturer_normalized (UQ)&lt;br&gt;&amp;#8226; website_url&lt;br&gt;&amp;#8226; &lt;b&gt;confirmed_by_user&lt;/b&gt;&lt;br&gt;&amp;#160;&amp;#160;(&lt;s&gt;approved_by operator&lt;/s&gt;, Q1)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=2;fontSize=9;align=left;verticalAlign=top;fontColor=#1F2937;spacingTop=6;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="800" y="635" width="205" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="db_url" value="&lt;b&gt;URL Index DB&lt;/b&gt; &lt;span style='color:#2563EB;font-size:8px'&gt;[THAY ĐỔI]&lt;/span&gt;&lt;br&gt;&lt;br&gt;&amp;#8226; url_index (key D,M,M)&lt;br&gt;&amp;#8226; manual_url &amp;#183; manual_type&lt;br&gt;&amp;#8226; last_jit_at &amp;#183; jit_status&lt;br&gt;&amp;#8226; hit_count&lt;br&gt;&amp;#8226; &lt;s&gt;ttl_days / cached_at&lt;/s&gt; (Q4)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=2;fontSize=9;align=left;verticalAlign=top;fontColor=#1F2937;spacingTop=6;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="635" width="205" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="db_step" value="&lt;b&gt;Site Step Cache&lt;/b&gt;&lt;br&gt;&lt;br&gt;&amp;#8226; site_step_cache (host)&lt;br&gt;&amp;#8226; search_input_sel&lt;br&gt;&amp;#8226; search_button_sel&lt;br&gt;&amp;#8226; search_trigger_sel&lt;br&gt;&amp;#8226; action_template" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#FFFFFF;strokeColor=#1F2937;strokeWidth=1.5;fontSize=9;align=left;verticalAlign=top;fontColor=#1F2937;spacingTop=6;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="635" width="205" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="db_report" value="&lt;b&gt;Broken Link Reports&lt;/b&gt; &lt;span style='color:#059669;font-size:8px'&gt;[MỚI]&lt;/span&gt;&lt;br&gt;&lt;br&gt;&amp;#8226; link_reports (Q6)&lt;br&gt;&amp;#8226; url &amp;#183; model_key&lt;br&gt;&amp;#8226; reported_by &amp;#183; reported_at&lt;br&gt;&amp;#8226; status: open | fixed" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#ECFDF5;strokeColor=#059669;strokeWidth=2;fontSize=9;align=left;verticalAlign=top;fontColor=#064E3B;spacingTop=6;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="635" width="205" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="note_removed" value="&lt;b style='font-size:12px;color:#7F1D1D'&gt;&amp;#10006; ĐÃ LOẠI BỎ (so với bản đề xuất / Suggestion)&lt;/b&gt;&lt;br&gt;&amp;#8226; Luồng &lt;b&gt;người vận hành xác nhận link&lt;/b&gt; &amp;amp; bảng manufacturer_website_confirm &amp;#8594; user tự xác nhận trong chat &amp;#160;(Q1)&lt;br&gt;&amp;#8226; &lt;b&gt;Notification Service&lt;/b&gt;, Email/Push Gateway (SES/FCM), &lt;b&gt;async notify&lt;/b&gt;, client Email/App &amp;#8594; chỉ trả qua SSE &amp;#160;(Q2)&lt;br&gt;&amp;#8226; &lt;b&gt;TTL 60 ngày&lt;/b&gt; trên url_index &amp;amp; job refresh định kỳ / crawler quét link mới &amp;#8594; chỉ JIT 200 OK &amp;#160;(Q4, Q5)&lt;br&gt;&amp;#8226; Logic phát hiện &lt;b&gt;Soft 404&lt;/b&gt; / xác thực nội dung trang &amp;#8594; thay bằng &quot;Báo lỗi link&quot; &amp;#160;(Q6)&lt;br&gt;&amp;#8226; Bộ lọc theo &lt;b&gt;lịch sử mua hàng&lt;/b&gt; / phân quyền &amp;#8594; tìm kiếm mở hoàn toàn &amp;#160;(Q7)&lt;br&gt;&amp;#8226; &lt;b&gt;Rate-limit / Proxy / IP rotation / Queue&lt;/b&gt; chống spam &amp;#8594; bỏ (rủi ro ~0) &amp;#160;(Q8)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#7F1D1D;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="110" y="845" width="800" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="note_added" value="&lt;b style='font-size:12px;color:#064E3B'&gt;&amp;#10003; THÊM MỚI / THAY ĐỔI / GIỮ LẠI&lt;/b&gt;&lt;br&gt;&amp;#8226; &lt;b&gt;Chat UI:&lt;/b&gt; nút [Đúng]/[Sai] xác nhận link &amp;#183; nút &quot;Báo lỗi link&quot; &amp;#183; gợi ý SP đã lưu &amp;#160;(Q1,Q3,Q6)&lt;br&gt;&amp;#8226; &lt;b&gt;Slot Filling:&lt;/b&gt; gợi ý user_owned_products để &lt;b&gt;BỎ QUA bước định vị&lt;/b&gt; &amp;#160;(Q3)&lt;br&gt;&amp;#8226; &lt;b&gt;Tasks DB + Waiters GIỮ LẠI:&lt;/b&gt; nhiều user cùng tìm 1 SP cùng lúc &amp;#8594; chung 1 task, các user khác là waiter cùng chờ &amp;amp; nhận SSE&lt;br&gt;&amp;#8226; &lt;b&gt;Search Orchestrator&lt;/b&gt; đồng bộ (SSE), không email/push; không thấy &amp;#8594; &quot;Không tìm thấy&quot;, kết thúc &amp;#160;(Q2)&lt;br&gt;&amp;#8226; &lt;b&gt;url_index KHÔNG TTL&lt;/b&gt;; JIT chỉ 200 OK; link chết &amp;#8594; re-search &amp;#160;(Q4)&lt;br&gt;&amp;#8226; &lt;b&gt;Operator Console + link_reports&lt;/b&gt;: nhận báo lỗi, operator cập nhật link thủ công &amp;#160;(Q6)&lt;br&gt;&amp;#8226; &lt;b&gt;Module tìm kiếm độc lập&lt;/b&gt; + hook phân quyền (gắn sau) &amp;#160;(Q7)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#059669;strokeWidth=1.5;fontSize=10;align=left;verticalAlign=top;fontColor=#064E3B;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="920" y="845" width="810" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="request / SSE (chờ trong chat)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#1F2937;strokeWidth=1.5;fontSize=9;fontColor=#374151;startArrow=classic;startFill=1;endArrow=classic;" edge="1" parent="1" source="chat_ui" target="gateway">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="thu thập slot" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#1F2937;strokeWidth=1.5;fontSize=9;fontColor=#374151;endArrow=classic;" edge="1" parent="1" source="gateway" target="slot">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="R/W &amp;#183; gợi ý SP đã lưu" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#2563EB;strokeWidth=1.5;fontSize=9;fontColor=#2563EB;startArrow=classic;startFill=1;endArrow=classic;" edge="1" parent="1" source="slot" target="db_user">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="định vị xong &amp;#8594; search" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#1F2937;strokeWidth=1.5;fontSize=9;fontColor=#374151;endArrow=classic;" edge="1" parent="1" source="slot" target="search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="báo lỗi link (Q6)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#DC2626;strokeWidth=1.2;fontSize=9;fontColor=#DC2626;dashed=1;endArrow=classic;" edge="1" parent="1" source="gateway" target="operator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="et1" value="create/find task &amp;#183; dedup" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#CA8A04;strokeWidth=2;fontSize=9;fontColor=#92400E;fontStyle=1;startArrow=classic;startFill=1;endArrow=classic;" edge="1" parent="1" source="search" target="db_tasks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="et2" value="waiter chờ task" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#CA8A04;strokeWidth=2;fontSize=9;fontColor=#92400E;fontStyle=1;endArrow=classic;" edge="1" parent="1" source="search" target="db_waiters">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="lookup (D,M,M)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#059669;strokeWidth=1.5;fontSize=9;fontColor=#059669;fontStyle=1;startArrow=classic;startFill=1;endArrow=classic;" edge="1" parent="1" source="search" target="cache">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="SELECT (no TTL)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#000066;strokeWidth=1.2;fontSize=9;fontColor=#374151;endArrow=classic;" edge="1" parent="1" source="cache" target="db_url">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="JIT 200 OK" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#9CA3AF;strokeWidth=1.2;fontSize=9;fontColor=#6B7280;endArrow=classic;" edge="1" parent="1" source="cache" target="sites">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="miss / link chết &amp;#8594; resolve" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#DC2626;strokeWidth=1.5;fontSize=9;fontColor=#DC2626;fontStyle=1;dashed=1;endArrow=classic;" edge="1" parent="1" source="search" target="resolver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="lookup / upsert (user-confirmed)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#1F2937;strokeWidth=1.5;fontSize=9;fontColor=#374151;startArrow=classic;startFill=1;endArrow=classic;" edge="1" parent="1" source="resolver" target="db_master">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" value="nếu thiếu website" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#1F2937;strokeWidth=1.5;fontSize=9;fontColor=#374151;endArrow=classic;" edge="1" parent="1" source="resolver" target="llm_ws">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" value="LLM + Web Search" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#d6b656;strokeWidth=1.2;fontSize=9;fontColor=#6B7280;dashed=1;endArrow=classic;startArrow=classic;startFill=1;" edge="1" parent="1" source="llm_ws" target="ai_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" value="website_url" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#059669;strokeWidth=1.5;fontSize=9;fontColor=#059669;fontStyle=1;endArrow=classic;" edge="1" parent="1" source="resolver" target="crawl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" value="UI analyze / extract" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#9CA3AF;strokeWidth=1.2;fontSize=9;fontColor=#6B7280;dashed=1;endArrow=classic;startArrow=classic;startFill=1;" edge="1" parent="1" source="crawl" target="ai_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" value="R/W selectors" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#1F2937;strokeWidth=1.5;fontSize=9;fontColor=#374151;startArrow=classic;startFill=1;endArrow=classic;" edge="1" parent="1" source="crawl" target="db_step">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" value="HTTP crawl &amp;#8804;3 hops" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#9CA3AF;strokeWidth=1.2;fontSize=9;fontColor=#6B7280;endArrow=classic;" edge="1" parent="1" source="crawl" target="sites">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" value="ManualResult / not found" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#059669;strokeWidth=1.5;fontSize=9;fontColor=#059669;fontStyle=1;endArrow=classic;" edge="1" parent="1" source="crawl" target="search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" value="SSE: xác nhận [Đúng]/[Sai] &amp;amp; kết quả" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#059669;strokeWidth=1.5;fontSize=9;fontColor=#059669;fontStyle=1;dashed=1;endArrow=classic;" edge="1" parent="1" source="search" target="chat_ui">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" value="UPSERT khi user xác nhận Đúng" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#2563EB;strokeWidth=1.5;fontSize=9;fontColor=#2563EB;dashed=1;endArrow=classic;" edge="1" parent="1" source="search" target="db_url">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" value="log report" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#059669;strokeWidth=1.2;fontSize=9;fontColor=#059669;endArrow=classic;" edge="1" parent="1" source="operator" target="db_report">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" value="cập nhật link thủ công" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#DC2626;strokeWidth=1.2;fontSize=9;fontColor=#DC2626;endArrow=classic;" edge="1" parent="1" source="operator" target="db_url">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e23" value="traces / logs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;strokeColor=#9CA3AF;strokeWidth=1;fontSize=9;fontColor=#6B7280;dashed=1;endArrow=classic;" edge="1" parent="1" source="crawl" target="storage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
