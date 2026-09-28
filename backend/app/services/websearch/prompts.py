@@ -62,6 +62,29 @@ Return JSON ONLY in this exact shape:
 """
 
 
+# ── Combined pipeline: find the OFFICIAL brand site, then crawl it. ───────────
+#    The *task* prompt (what to find) comes from the UI; only this output
+#    contract lives in code, so the response is reliably parseable. The model
+#    must return the homepage URL of the official site — not a manual link.
+
+OFFICIAL_SITE_SYSTEM = (
+    "You are a brand-research assistant. Using live web search, you identify the "
+    "OFFICIAL manufacturer / brand website for a given product. You return the "
+    "homepage (root domain) of that official site — never a manual/PDF link, a "
+    "retailer or marketplace (Amazon, Rakuten, eBay, etc.), a review/forum site, "
+    "or an ad. You NEVER fabricate URLs: the domain must be one that actually "
+    "appeared in your search results. Work in whatever language the product is "
+    "described in. Always answer with STRICT JSON only — no prose, no markdown "
+    "fences, no citation markup — in this EXACT shape:\n"
+    '{"found": true, "url": "https://brand.example", "domain": "brand.example", '
+    '"brand": "Brand name", "summary": "one sentence on why this is the official site", '
+    '"reason": ""}\n'
+    "If you cannot confidently identify an official site, return "
+    '{"found": false, "url": null, "domain": null, "brand": null, "summary": null, '
+    '"reason": "short explanation"}.'
+)
+
+
 # ── SerpAPI mode: the search is done by SerpAPI; the LLM only filters the
 #    returned results and extracts the manual URLs from them. ──────────────────
 

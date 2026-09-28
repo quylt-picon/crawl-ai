@@ -49,6 +49,34 @@ class ManualExtraction(BaseModel):
     reason: Optional[str] = None
 
 
+class OfficialSite(BaseModel):
+    """Official manufacturer / brand site located by the web-search step.
+
+    Produced by the combined (web-search → crawl) pipeline: a grounded LLM
+    call finds the brand's *homepage* for a product, and that URL is then fed
+    to the existing crawl workflow. ``url`` should be a root/homepage URL, not
+    a deep manual link.
+    """
+
+    found: bool = False
+    url: Optional[str] = None        # homepage / root URL of the official site
+    domain: Optional[str] = None     # e.g. "panasonic.jp"
+    brand: Optional[str] = None      # human-readable brand / manufacturer name
+    summary: Optional[str] = None
+    reason: Optional[str] = None
+
+
+class SerpQueries(BaseModel):
+    """Search queries produced by the query-generation LLM (SerpAPI pipeline).
+
+    The model turns a product (name + code) and an operator instruction into a
+    small set of web-search queries; SerpAPI then runs them. Only ``queries``
+    is consumed — any extra fields the model emits are ignored.
+    """
+
+    queries: List[str] = Field(default_factory=list)
+
+
 class WebSearchManuals(BaseModel):
     """Output of the LLM *web-search* manual finder.
 

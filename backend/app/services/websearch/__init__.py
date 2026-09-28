@@ -4,6 +4,7 @@ from app.services.websearch.orchestrator import (
 )
 from app.services.websearch.service import (
     ManualSearchResult,
+    OfficialSiteResult,
     WebSearchError,
     WebSearchService,
     get_web_search_service,
@@ -15,5 +16,6 @@ __all__ = [
     "WebSearchService",
     "WebSearchError",
     "ManualSearchResult",
+    "OfficialSiteResult",
     "get_web_search_service",
 ]

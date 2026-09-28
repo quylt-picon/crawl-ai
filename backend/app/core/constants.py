@@ -15,6 +15,16 @@ class StepId(str, Enum):
     # to the crawl pipeline that shares the FINALIZE step.
     WEB_SEARCH = "web_search"
     REVIEW_RESULTS = "review_results"
+    # Combined pipeline: web search locates the official brand site, then the
+    # crawl pipeline (above steps) runs against it. FIND_SITE is its first step.
+    FIND_SITE = "find_site"
+    # Deep-crawl pipeline: web search locates the product's support/detail page,
+    # then the 3-hop manual extraction (FIND_MANUAL) runs directly against it.
+    FIND_PAGE = "find_page"
+    # SerpAPI pipeline: an LLM generates the search queries (GENERATE_QUERIES),
+    # SerpAPI runs them (WEB_SEARCH), then an LLM evaluates/selects the results
+    # against an operator rule set (REVIEW_RESULTS).
+    GENERATE_QUERIES = "generate_queries"
 
 
 class StepStatus(str, Enum):
@@ -34,4 +44,7 @@ STEP_LABELS: dict[StepId, str] = {
     StepId.FINALIZE: "Finalizing result",
     StepId.WEB_SEARCH: "Searching the web with LLM",
     StepId.REVIEW_RESULTS: "Reviewing found documents",
+    StepId.FIND_SITE: "Finding the official site",
+    StepId.FIND_PAGE: "Finding the support page",
+    StepId.GENERATE_QUERIES: "Generating search queries",
 }

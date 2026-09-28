@@ -24,6 +24,13 @@ export const STEP_LABELS: Record<StepId, string> = {
   filter_results: "Filter results",
   find_manual: "Extract manual",
   finalize: "Finalize result",
+  // Steps emitted by the other pipelines (web-search / combined) — labelled
+  // here so any shared component that maps over StepId stays exhaustive.
+  find_site: "Find official site",
+  find_page: "Find support page",
+  web_search: "Web search",
+  review_results: "Review results",
+  generate_queries: "Generate queries",
 };
 
 export interface StepState {

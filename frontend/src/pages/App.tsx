@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Activity, FileText, Globe, Sparkles } from "lucide-react";
+import { Activity, Compass, FileText, Globe, Sparkles } from "lucide-react";
 import { SearchForm } from "@/components/SearchForm";
 import { Stepper } from "@/components/Stepper";
 import { Timeline } from "@/components/Timeline";
@@ -9,8 +9,9 @@ import { useCrawlJob } from "@/hooks/useCrawlJob";
 import { useWorkflow } from "@/store/workflow";
 import UrlHealthCheck from "@/pages/UrlHealthCheck";
 import WebSearchFinder from "@/pages/WebSearchFinder";
+import WebSearchCrawlFinder from "@/pages/WebSearchCrawlFinder";
 
-type Tab = "finder" | "websearch" | "health";
+type Tab = "finder" | "websearch" | "sitecrawl" | "health";
 
 export default function App() {
   const { submit } = useCrawlJob();
@@ -31,7 +32,7 @@ export default function App() {
             Crawl AI Toolkit
           </h1>
           <p className="text-sm text-slate-500">
-            Product Manual Finder · Web Search Finder · URL Health Check
+            Product Manual Finder · Web Search Finder · Web Search + Crawl · URL Health Check
           </p>
         </div>
         <div className="ml-auto flex flex-wrap items-center gap-2">
@@ -79,6 +80,17 @@ export default function App() {
         </button>
         <button
           className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+            tab === "sitecrawl"
+              ? "bg-white text-slate-900 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+          onClick={() => setTab("sitecrawl")}
+        >
+          <Compass className="h-4 w-4" />
+          Web Search + Crawl
+        </button>
+        <button
+          className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all ${
             tab === "health"
               ? "bg-white text-slate-900 shadow-sm"
               : "text-slate-500 hover:text-slate-700"
@@ -102,6 +114,8 @@ export default function App() {
         </>
       ) : tab === "websearch" ? (
         <WebSearchFinder />
+      ) : tab === "sitecrawl" ? (
+        <WebSearchCrawlFinder />
       ) : (
         <UrlHealthCheck />
       )}

@@ -25,9 +25,10 @@ from tenacity import (
 
 from app.core.config import get_settings
 from app.core.logging import get_logger
-from app.schemas.llm import ManualEntry, WebSearchManuals
+from app.schemas.llm import ManualEntry, OfficialSite, WebSearchManuals
 from app.schemas.responses import ManualResult
 from app.services.websearch.prompts import (
+    OFFICIAL_SITE_SYSTEM,
     SERPAPI_FILTER_SYSTEM,
     SERPAPI_FILTER_TEMPLATE,
     WEB_SEARCH_MANUAL_TEMPLATE,
@@ -96,6 +97,20 @@ class SerpSearch:
 
     queries: list[str]
     results: list[SerpResult]
+
+
+@dataclass
+class OfficialSiteResult:
+    """Outcome of the official-site web search, with the grounding it used.
+
+    ``site`` carries the parsed decision (found / url / domain / …); ``sources``
+    and ``queries`` expose what the grounded search consulted so the workflow
+    can show its work even on a miss.
+    """
+
+    site: OfficialSite
+    sources: list[dict[str, str]] = field(default_factory=list)
+    queries: list[str] = field(default_factory=list)
 
 
 class WebSearchService:
@@ -176,6 +191,60 @@ class WebSearchService:
             raise WebSearchError(f"web search failed: {exc}") from exc
 
         raise WebSearchError("web search did not return")  # pragma: no cover
+
+    # --------------------------------------------------------- official-site mode
+
+    async def find_official_site(
+        self,
+        *,
+        prompt: str,
+        model: Optional[str] = None,
+    ) -> OfficialSiteResult:
+        """Grounded web search to locate a product's OFFICIAL brand homepage.
+
+        ``prompt`` is the full, UI-supplied instruction (product fields already
+        substituted) — the backend keeps no task prompt of its own here, only
+        the JSON output contract (``OFFICIAL_SITE_SYSTEM``). Like
+        :meth:`find_manuals`, a hard provider failure raises
+        :class:`WebSearchError`; a soft "no valid JSON / nothing found" is
+        returned as ``found=False`` with whatever grounding was collected.
+        """
+        last_raw: WebSearchRaw | None = None
+        try:
+            async for attempt in AsyncRetrying(
+                stop=stop_after_attempt(self._max_retries),
+                wait=wait_exponential(multiplier=0.5, min=0.5, max=5.0),
+                retry=retry_if_exception_type((JsonParseError, ValidationError)),
+                reraise=True,
+            ):
+                with attempt:
+                    raw = await self._provider.search(
+                        prompt, model=model, system=OFFICIAL_SITE_SYSTEM
+                    )
+                    last_raw = raw
+                    payload = extract_json(raw.text)
+                    site = OfficialSite.model_validate(payload)
+                    if site.url:
+                        site.url = _normalize_site_url(site.url)
+                    return OfficialSiteResult(
+                        site=site,
+                        sources=raw.sources,
+                        queries=raw.queries,
+                    )
+        except (JsonParseError, ValidationError, RetryError) as exc:
+            _log.warning("official-site search returned no valid JSON: %s", exc)
+            return OfficialSiteResult(
+                site=OfficialSite(
+                    found=False,
+                    reason="The model did not return a valid official-site result.",
+                ),
+                sources=last_raw.sources if last_raw else [],
+                queries=last_raw.queries if last_raw else [],
+            )
+        except Exception as exc:  # provider / network / auth failure
+            raise WebSearchError(f"official-site search failed: {exc}") from exc
+
+        raise WebSearchError("official-site search did not return")  # pragma: no cover
 
     # ------------------------------------------------------------- SerpAPI mode
 
@@ -318,6 +387,21 @@ def _build_serp_queries(
             seen.add(q)
             out.append(q)
     return out[:_SERP_MAX_QUERIES]
+
+
+def _normalize_site_url(url: str) -> str:
+    """Make an LLM-returned site URL safe to hand to the crawler.
+
+    Adds a scheme when missing (``brand.com`` → ``https://brand.com``) so the
+    crawl pipeline always receives an absolute URL. Leaves already-absolute
+    URLs untouched.
+    """
+    cleaned = (url or "").strip()
+    if not cleaned:
+        return cleaned
+    if not urlparse(cleaned).scheme:
+        return f"https://{cleaned.lstrip('/')}"
+    return cleaned
 
 
 def _registrable_domain(website_url: Optional[str]) -> str:

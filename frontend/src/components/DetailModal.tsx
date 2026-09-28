@@ -146,6 +146,18 @@ const STEP_DESCRIPTIONS: Record<StepId, string> = {
     "Opens the product page with header/footer stripped and runs an LLM extraction strategy on it. If the manual lives on a separate support/downloads page, follows that link and extracts again (up to a few hops). Returns every manual found, across languages and variants.",
   finalize:
     "Wraps up the manual list: a download URL is returned directly; an HTML manual is fetched into clean text; inline content is kept as-is. All manuals collected from extraction are preserved.",
+  // Steps from the other pipelines (web-search / combined). Described here so
+  // this Record<StepId, string> stays exhaustive across all step IDs.
+  find_site:
+    "Runs a grounded web search to locate the product's official manufacturer / brand homepage, then hands that URL to the crawl pipeline above.",
+  find_page:
+    "Runs a grounded web search to locate the product's own support / detail page, then runs the 3-hop manual extraction directly against it.",
+  web_search:
+    "Asks the LLM, grounded on live web search, to find the product's documentation directly — an alternative to crawling the site. In SerpAPI mode this step is the SerpAPI search over the LLM-generated queries.",
+  review_results:
+    "Reviews the web sources and documents the search returned and selects the relevant manuals. In SerpAPI mode the LLM evaluates the results against the operator's rules.",
+  generate_queries:
+    "Asks the LLM to turn the product (name + model code) into a set of web-search queries, following the operator's query prompt, before SerpAPI runs them.",
 };
 
 function formatTime(ts: string): string {

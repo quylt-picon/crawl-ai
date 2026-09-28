@@ -32,6 +32,10 @@ class Settings(BaseSettings):
     llm_max_retries: int = Field(3, alias="LLM_MAX_RETRIES")
     llm_request_timeout_s: int = Field(60, alias="LLM_REQUEST_TIMEOUT_S")
 
+    # Target dir for the Web Search + Crawl "Export history" endpoint. Empty =
+    # the frontend's public/ folder (served at /<filename> by the dev server).
+    sitecrawl_export_dir: str = Field("", alias="SITECRAWL_EXPORT_DIR")
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

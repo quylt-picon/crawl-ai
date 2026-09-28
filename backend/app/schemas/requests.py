@@ -43,3 +43,60 @@ class WebSearchRequest(CrawlSearchRequest):
     def _strip_model(cls, v: Optional[str]) -> Optional[str]:
         v = (v or "").strip()
         return v or None
+
+
+class WebSearchCrawlRequest(BaseModel):
+    """Combined pipeline input: web search finds the official brand site, then
+    the crawl pipeline runs against it.
+
+    There is no ``website_url`` — the site is *discovered* from the product
+    name + code. ``search_prompt`` is the instruction the UI sends for the
+    site-finding web search (the UI ships a default); the backend deliberately
+    has no hardcoded search prompt of its own. ``{product_name}`` and
+    ``{product_code}`` placeholders in the prompt are substituted server-side.
+    """
+
+    product_name: str = Field(..., min_length=1, max_length=300)
+    product_code: str = Field(..., min_length=1, max_length=120)
+    search_prompt: str = Field(..., min_length=1, max_length=8000)
+    model: Optional[str] = Field(None, max_length=120)
+
+    @field_validator("product_name", "product_code", "search_prompt")
+    @classmethod
+    def _strip(cls, v: str) -> str:
+        return v.strip()
+
+    @field_validator("model")
+    @classmethod
+    def _strip_model(cls, v: Optional[str]) -> Optional[str]:
+        v = (v or "").strip()
+        return v or None
+
+
+class SerpCrawlRequest(BaseModel):
+    """SerpAPI pipeline input: an LLM generates the search queries, SerpAPI runs
+    them, then an LLM evaluates/selects the results against an operator rule set.
+
+    Both LLM instructions come from the UI: ``query_prompt`` drives the
+    query-generation step and ``eval_rule`` drives the result-selection step.
+    The backend keeps no task prompt of its own (only the JSON output
+    contracts). ``{product_name}`` / ``{product_code}`` placeholders in either
+    field are substituted server-side.
+    """
+
+    product_name: str = Field(..., min_length=1, max_length=300)
+    product_code: str = Field(..., min_length=1, max_length=120)
+    query_prompt: str = Field(..., min_length=1, max_length=8000)
+    eval_rule: str = Field(..., min_length=1, max_length=8000)
+    model: Optional[str] = Field(None, max_length=120)
+
+    @field_validator("product_name", "product_code", "query_prompt", "eval_rule")
+    @classmethod
+    def _strip(cls, v: str) -> str:
+        return v.strip()
+
+    @field_validator("model")
+    @classmethod
+    def _strip_model(cls, v: Optional[str]) -> Optional[str]:
+        v = (v or "").strip()
+        return v or None

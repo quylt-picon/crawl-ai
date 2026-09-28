@@ -1,0 +1,50 @@
+[
+  {
+    "label": "Panasonic: Máy giặt và máy sấy lồng nghiêng NA-LX129CL",
+    "product_name": "ななめドラム洗濯乾燥機",
+    "product_code": "NA-LX129CL",
+    "site": "https://panasonic.jp"
+  },
+  {
+    "label": "Panasonic: Lò hấp NE-BS656",
+    "product_name": "スチームオーブンレンジ",
+    "product_code": "NE-BS656",
+    "site": "https://panasonic.jp"
+  },
+  {
+    "label": "SONY: Tai nghe chống ồn không dây WH-1000XM5",
+    "product_name": "ワイヤレスノイズキャンセリングステレオヘッドセット",
+    "product_code": "WH-1000XM5",
+    "site": "https://www.sony.jp"
+  },
+  {
+    "label": "SONY: Tai nghe chống ồn không dây WF-1000XM5",
+    "product_name": "ワイヤレスノイズキャンセリングステレオヘッドセット",
+    "product_code": "WF-1000XM5",
+    "site": "https://www.sony.jp"
+  },
+  {
+    "label": "SHARP: Máy lọc không khí tạo ẩm KI-RS50",
+    "product_name": "加湿空気清浄機",
+    "product_code": "KI-RS50",
+    "site": "https://www.sharp.co.jp"
+  },
+  {
+    "label": "HITACHI: Máy giặt và máy sấy kiểu lồng quay BD-STX130J",
+    "product_name": "ドラム式洗濯乾燥機",
+    "product_code": "BD-STX130J",
+    "site": "https://kadenfan.hitachi.co.jp"
+  },
+  {
+    "label": "Zojirushi: Nồi cơm điện áp suất NW-FB10",
+    "product_name": "圧力IH炊飯ジャー 炎舞炊き",
+    "product_code": "NW-FB10",
+    "site": "https://www.zojirushi.co.jp"
+  },
+  {
+    "label": "Canon: Máy in phun TS8730",
+    "product_name": "インクジェットプリンター",
+    "product_code": "TS8730",
+    "site": "https://canon.jp"
+  }
+]

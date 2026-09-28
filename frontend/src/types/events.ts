@@ -6,7 +6,16 @@ export type StepId =
   | "search_product"
   | "filter_results"
   | "find_manual"
-  | "finalize";
+  | "finalize"
+  // Combined (web-search → crawl) pipeline: locate the official site first.
+  | "find_site"
+  // Deep-crawl pipeline: locate the product's support/detail page first.
+  | "find_page"
+  // Web-search pipeline steps (shared by the websearch tab).
+  | "web_search"
+  | "review_results"
+  // SerpAPI pipeline: an LLM first generates the search queries.
+  | "generate_queries";
 
 export type ManualEntryType = "link" | "html_url" | "inline";
 
